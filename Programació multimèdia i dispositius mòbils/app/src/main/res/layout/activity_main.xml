@@ -24,10 +24,9 @@
             app:elevation="0dp"
             app:labelVisibilityMode="selected"
             app:menu="@menu/bottom_menu"
-            app:backgroundTint="@android:color/transparent"
+            app:backgroundTint="@color/white"
             android:background="@color/white"
             app:itemBackground="@color/white"
-            app:itemRippleColor="@android:color/transparent"
             app:itemIconTint="@color/green"
             app:itemTextColor="@color/green"/>
 

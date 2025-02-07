@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_grupob.R
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        window.statusBarColor = ContextCompat.getColor(this, R.color.light_grey)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.white)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -60,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, MailboxFragment())
                 .commit()
             4 -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, MeFragment())
+                .replace(R.id.fragmentContainer, MeFragment(this))
                 .commit()
         }
 
