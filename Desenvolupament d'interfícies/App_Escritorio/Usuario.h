@@ -2,8 +2,6 @@
 #define _USUARIO_H
 
 #include <QString>
-#include <QColor>
-#include <QPainter>
 #include <QImage>
 
 class Usuario {
@@ -12,7 +10,7 @@ class Usuario {
 		Usuario(QString nombre, QString apellidos);
 		Usuario();
 		
-		int id;
+		int id = 0;
 		QString nombre, apellidos, correo, contrasena;
 		QImage imagen;
 		//Ubicacion *ubicacion;

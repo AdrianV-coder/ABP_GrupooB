@@ -1,12 +1,12 @@
-#include "bola.h"
+#include "usuario.h"
 
 #include <QDebug>
+#include <math.h>
+#include <stdlib.h>
 
-Usuario::Usuario(String nombre, String apellidos): nombre(nombre), apellidos(apellidos) {
-	
+Usuario::Usuario(QString nombre, QString apellidos): nombre(nombre), apellidos(apellidos) {
 	esImagen = false;
 }
 
-Usuario::Usuario(): Bola("", "") {
-	
+Usuario::Usuario(): Usuario("", "") {
 }

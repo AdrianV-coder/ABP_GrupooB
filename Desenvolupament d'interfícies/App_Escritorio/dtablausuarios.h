@@ -1,32 +1,32 @@
 
 #ifndef DTABLAUSUARIOS_H
 #define DTABLAUSUARIOS_H
+
 #include "ui_dtablausuarios.h"
-//#include "usuarios.h";
+#include "usuario.h"
 
 #include <QVector>
 #include <QDialog>
 #include <QHBoxLayout>
+#include <QAbstractTableModel>
+#include <QModelIndex>
+
 
 class DTablaUsuarios : public QDialog, public Ui::DTablaUsuarios {
 	Q_OBJECT
 
 	public:
-		DTablaUsuarios(QWidget *parent = NULL);
-
-	public slots:
-		
-
+		DTablaUsuarios(QVector<Usuario *> *pUsuarioPasados, QWidget *parent = nullptr);
 };
 
 class ModeloTabla : public QAbstractTableModel {
 	Q_OBJECT
 	
 	public:
-		//QVector<Bola *> *pBolas;
-		ModeloTabla(/*QVector<Bola *> *pBolasPasadas,*/ QObject *parent = nullptr);
+		QVector<Usuario *> *pUsuario;
+		ModeloTabla(QVector<Usuario *> *pUsuarioPasados, QObject *parent = nullptr);
 		
-		int	columnCount(const QModelIndex &parent = QModelIndex()) const;
+		int	columnCount(const QModelIndex &parent = QModelIndex()) const override;
 		int	rowCount(const QModelIndex &parent = QModelIndex()) const;
 		QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 		Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -34,7 +34,7 @@ class ModeloTabla : public QAbstractTableModel {
 		QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 		
 	public slots:
-		void slotTemporizador();	
+		void slotTemporizador();
 };
 
 #endif 
