@@ -1,9 +1,9 @@
 package com.adverolt.app_api.controller;
 
-import com.adverolt.acceso_a_datos.model.Articulo;
-import com.adverolt.acceso_a_datos.model.dto.articulo.ArticuloRequestDto;
-import com.adverolt.acceso_a_datos.model.dto.articulo.ArticuloResponseDto;
-import com.adverolt.acceso_a_datos.service.IArticuloService;
+import com.adverolt.app_api.model.Articulo;
+import com.adverolt.app_api.model.dto.articulo.ArticuloRequestDto;
+import com.adverolt.app_api.model.dto.articulo.ArticuloResponseDto;
+import com.adverolt.app_api.service.IArticuloService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package com.adverolt.app_api.repository;
 
-import com.adverolt.acceso_a_datos.model.Usuario;
+import com.adverolt.app_api.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

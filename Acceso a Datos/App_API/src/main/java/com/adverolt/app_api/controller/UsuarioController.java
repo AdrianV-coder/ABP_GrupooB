@@ -1,9 +1,9 @@
 package com.adverolt.app_api.controller;
 
-import com.adverolt.acceso_a_datos.model.Usuario;
-import com.adverolt.acceso_a_datos.model.dto.usuario.UsuarioRequestDto;
-import com.adverolt.acceso_a_datos.model.dto.usuario.UsuarioResponseDto;
-import com.adverolt.acceso_a_datos.service.IUsuarioService;
+import com.adverolt.app_api.model.Usuario;
+import com.adverolt.app_api.model.dto.usuario.UsuarioRequestDto;
+import com.adverolt.app_api.model.dto.usuario.UsuarioResponseDto;
+import com.adverolt.app_api.service.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

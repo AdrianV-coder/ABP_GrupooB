@@ -1,8 +1,8 @@
 package com.adverolt.app_api.service;
 
-import com.adverolt.acceso_a_datos.model.Articulo;
-import com.adverolt.acceso_a_datos.model.dto.articulo.ArticuloRequestDto;
-import com.adverolt.acceso_a_datos.model.dto.articulo.ArticuloResponseDto;
+import com.adverolt.app_api.model.Articulo;
+import com.adverolt.app_api.model.dto.articulo.ArticuloRequestDto;
+import com.adverolt.app_api.model.dto.articulo.ArticuloResponseDto;
 
 import java.util.List;
 

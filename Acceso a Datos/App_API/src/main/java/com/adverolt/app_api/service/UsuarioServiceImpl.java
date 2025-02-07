@@ -1,9 +1,9 @@
 package com.adverolt.app_api.service;
 
-import com.adverolt.acceso_a_datos.model.Usuario;
-import com.adverolt.acceso_a_datos.model.dto.usuario.UsuarioRequestDto;
-import com.adverolt.acceso_a_datos.model.dto.usuario.UsuarioResponseDto;
-import com.adverolt.acceso_a_datos.repository.IUsuarioRepository;
+import com.adverolt.app_api.model.Usuario;
+import com.adverolt.app_api.model.dto.usuario.UsuarioRequestDto;
+import com.adverolt.app_api.model.dto.usuario.UsuarioResponseDto;
+import com.adverolt.app_api.repository.IUsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

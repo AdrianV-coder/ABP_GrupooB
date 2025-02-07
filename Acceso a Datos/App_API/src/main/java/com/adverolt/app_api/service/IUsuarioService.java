@@ -1,8 +1,8 @@
 package com.adverolt.app_api.service;
 
-import com.adverolt.acceso_a_datos.model.Usuario;
-import com.adverolt.acceso_a_datos.model.dto.usuario.UsuarioRequestDto;
-import com.adverolt.acceso_a_datos.model.dto.usuario.UsuarioResponseDto;
+import com.adverolt.app_api.model.Usuario;
+import com.adverolt.app_api.model.dto.usuario.UsuarioRequestDto;
+import com.adverolt.app_api.model.dto.usuario.UsuarioResponseDto;
 
 import java.util.List;
 

@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="af414ef3-6863-4389-a77e-f1ed8de00c75" name="Changes" comment="Subida de archivos del módulo de (Acceso a Datos) &lt;3">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/App_Api" beforeDir="false" />
+    <list default="true" id="d05f08ca-4cb7-4fd6-bf8e-10411fccaaa2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,24 +14,23 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;AdrianV-coder&quot;
+    &quot;assignee&quot;: &quot;davpalmol&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/AdrianV-coder/ABP_GrupooB.git&quot;,
-    &quot;accountId&quot;: &quot;22fbfbaf-11af-45a5-82ed-99739dc6721f&quot;
+    &quot;accountId&quot;: &quot;154f6dd9-76bd-4c36-80a6-c24b3e8a2140&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 1
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2sfGrcrx7dweNAxZdWkvjpssVaF" />
+  <component name="ProjectId" id="2shnFHug9tezt0FSpMFsOYzNAEC" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -41,56 +38,40 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Adry/Desktop/ABP_GrupooB/Acceso a Datos",
+    "last_opened_file_path": "C:/Users/usuario/Desktop/pojecte AGB/ABP_GrupooB/Acceso a Datos/App_API",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="af414ef3-6863-4389-a77e-f1ed8de00c75" name="Changes" comment="" />
-      <created>1738839415330</created>
+      <changelist id="d05f08ca-4cb7-4fd6-bf8e-10411fccaaa2" name="Changes" comment="" />
+      <created>1738916568553</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1738839415330</updated>
-      <workItem from="1738839416613" duration="65000" />
-      <workItem from="1738839536918" duration="1106000" />
-      <workItem from="1738914785179" duration="1336000" />
+      <updated>1738916568553</updated>
+      <workItem from="1738916569615" duration="1147000" />
+      <workItem from="1738919654248" duration="139000" />
+      <workItem from="1738919800701" duration="25000" />
     </task>
-    <task id="LOCAL-00001" summary="Subida de archivos del módulo de (Acceso a Datos) &lt;3">
-      <option name="closed" value="true" />
-      <created>1738915872547</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1738915872547</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Subida de archivos del módulo de (Acceso a Datos) &lt;3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Subida de archivos del módulo de (Acceso a Datos) &lt;3" />
   </component>
 </project>

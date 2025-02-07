@@ -1,6 +1,6 @@
 package com.adverolt.app_api.repository;
 
-import com.adverolt.acceso_a_datos.model.Articulo;
+import com.adverolt.app_api.model.Articulo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

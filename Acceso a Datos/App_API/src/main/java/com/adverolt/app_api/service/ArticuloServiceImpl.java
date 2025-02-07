@@ -1,11 +1,11 @@
 package com.adverolt.app_api.service;
 
-import com.adverolt.acceso_a_datos.model.Articulo;
-import com.adverolt.acceso_a_datos.model.Usuario;
-import com.adverolt.acceso_a_datos.model.dto.articulo.ArticuloRequestDto;
-import com.adverolt.acceso_a_datos.model.dto.articulo.ArticuloResponseDto;
-import com.adverolt.acceso_a_datos.repository.IArticuloRepository;
-import com.adverolt.acceso_a_datos.repository.IUsuarioRepository;
+import com.adverolt.app_api.model.Articulo;
+import com.adverolt.app_api.model.Usuario;
+import com.adverolt.app_api.model.dto.articulo.ArticuloRequestDto;
+import com.adverolt.app_api.model.dto.articulo.ArticuloResponseDto;
+import com.adverolt.app_api.repository.IArticuloRepository;
+import com.adverolt.app_api.repository.IUsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
