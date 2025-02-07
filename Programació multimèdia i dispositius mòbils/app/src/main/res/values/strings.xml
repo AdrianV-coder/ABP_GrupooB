@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">ListFor</string>
+
+    <!-- MainActivity (borrar)-->
+    <string name="hello_world">Hello World!</string>
+    <string name="configuration">Configuration</string>
+
+    <!-- Configuracion (hecho) -->
+    <string name="conf_multimedia">Media</string>
+    <string name="conf_idioma">Language</string>
+    <string name="conf_datos">Data</string>
+    <string name="conf_musica">Music</string>
+    <string name="conf_video">Welcome video</string>
+    <string name="conf_idioma_app">App language</string>
+    <string name="conf_origen_datos">Data origin</string>
+    <string name="conf_musica_off">Don\'t listen to music while the application is running</string>
+    <string name="conf_musica_on">Listen to music while the application is running</string>
+    <string name="conf_video_off">Don\'t play a video when starting the app</string>
+    <string name="conf_video_on">Play a video when starting the app</string>
+    <string name="conf_country">Select your country</string>
+    <string name="apply_changes">Apply Changes</string>
+
+    <!-- Mapa (alomejor falta algo) -->
+    <string name="maps">Maps</string>
+
+    <!-- Login (borrar) -->
+    <string name="tvUsuario">Usuario:</string>
+    <string name="tvContrasenya">"Contraseña: "</string>
+    <string name="btnEntrar">Acceder</string>
+
+    <!-- Menu Inferior (modificar) -->
+    <string name="item_home">Home</string>
+    <string name="item_favorites">Favorites</string>
+    <string name="item_upload">Upload</string>
+    <string name="item_mailbox">Mailbox</string>
+    <string name="item_me">Me</string>
+
+
+    <!-- Configuracion (hecho) -->
+    <string-array name="idioma">
+        <item name="espanyol">Spanish</item>
+        <item name="ingles">English</item>
+    </string-array>
+
+    <!-- Configuracion (hecho) -->
+    <string-array name="codigo_idioma">
+        <item name="espanyol">es</item>
+        <item name="ingles">en</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
