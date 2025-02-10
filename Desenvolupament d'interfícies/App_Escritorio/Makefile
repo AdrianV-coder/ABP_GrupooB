@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I. -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -52,10 +52,16 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = main.cpp \
-		ventanaprincipal.cpp moc_ventanaprincipal.cpp
-OBJECTS       = main.o \
+SOURCES       = dtablausuarios.cpp \
+		main.cpp \
+		usuario.cpp \
+		ventanaprincipal.cpp moc_dtablausuarios.cpp \
+		moc_ventanaprincipal.cpp
+OBJECTS       = dtablausuarios.o \
+		main.o \
+		usuario.o \
 		ventanaprincipal.o \
+		moc_dtablausuarios.o \
 		moc_ventanaprincipal.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -118,6 +124,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -137,7 +144,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		ABP_GrupoB.pro ventanaprincipal.h main.cpp \
+		ABP_GrupoB.pro dtablausuarios.h \
+		usuario.h \
+		ventanaprincipal.h dtablausuarios.cpp \
+		main.cpp \
+		usuario.cpp \
 		ventanaprincipal.cpp
 QMAKE_TARGET  = ABP_GrupoB
 DESTDIR       = 
@@ -147,7 +158,7 @@ TARGET        = ABP_GrupoB
 first: all
 ####### Build rules
 
-ABP_GrupoB:  $(OBJECTS)  
+ABP_GrupoB: ui_dtablausuarios.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ABP_GrupoB.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -211,6 +222,7 @@ Makefile: ABP_GrupoB.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.c
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -293,6 +305,7 @@ Makefile: ABP_GrupoB.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.c
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -328,8 +341,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ventanaprincipal.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp ventanaprincipal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dtablausuarios.h usuario.h ventanaprincipal.h $(DISTDIR)/
+	$(COPY_FILE) --parents dtablausuarios.cpp main.cpp usuario.cpp ventanaprincipal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents dtablausuarios.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -361,10 +375,20 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_ventanaprincipal.cpp
+compiler_moc_header_make_all: moc_dtablausuarios.cpp moc_ventanaprincipal.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ventanaprincipal.cpp
+	-$(DEL_FILE) moc_dtablausuarios.cpp moc_ventanaprincipal.cpp
+moc_dtablausuarios.cpp: dtablausuarios.h \
+		ui_dtablausuarios.h \
+		usuario.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/adrian/Escritorio/interfices/ABP_GrupoB/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/adrian/Escritorio/interfices/ABP_GrupoB -I/home/adrian/Escritorio/interfices/ABP_GrupoB -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include dtablausuarios.h -o moc_dtablausuarios.cpp
+
 moc_ventanaprincipal.cpp: ventanaprincipal.h \
+		usuario.h \
+		dtablausuarios.h \
+		ui_dtablausuarios.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/adrian/Escritorio/interfices/ABP_GrupoB/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/adrian/Escritorio/interfices/ABP_GrupoB -I/home/adrian/Escritorio/interfices/ABP_GrupoB -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/12 -I/usr/include/x86_64-linux-gnu/c++/12 -I/usr/include/c++/12/backward -I/usr/lib/gcc/x86_64-linux-gnu/12/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ventanaprincipal.h -o moc_ventanaprincipal.cpp
@@ -373,23 +397,45 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all:
+compiler_uic_make_all: ui_dtablausuarios.h
 compiler_uic_clean:
+	-$(DEL_FILE) ui_dtablausuarios.h
+ui_dtablausuarios.h: dtablausuarios.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic dtablausuarios.ui -o ui_dtablausuarios.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
-main.o: main.cpp ventanaprincipal.h
+dtablausuarios.o: dtablausuarios.cpp dtablausuarios.h \
+		ui_dtablausuarios.h \
+		usuario.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dtablausuarios.o dtablausuarios.cpp
+
+main.o: main.cpp ventanaprincipal.h \
+		usuario.h \
+		dtablausuarios.h \
+		ui_dtablausuarios.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-ventanaprincipal.o: ventanaprincipal.cpp ventanaprincipal.h
+usuario.o: usuario.cpp usuario.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o usuario.o usuario.cpp
+
+ventanaprincipal.o: ventanaprincipal.cpp ventanaprincipal.h \
+		usuario.h \
+		dtablausuarios.h \
+		ui_dtablausuarios.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ventanaprincipal.o ventanaprincipal.cpp
+
+moc_dtablausuarios.o: moc_dtablausuarios.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_dtablausuarios.o moc_dtablausuarios.cpp
 
 moc_ventanaprincipal.o: moc_ventanaprincipal.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ventanaprincipal.o moc_ventanaprincipal.cpp
