@@ -1,5 +1,6 @@
 package com.example.app_grupob.retrofit
 
+import com.example.app_grupob.pojos.Articulo
 import com.example.app_grupob.pojos.Usuario
 import retrofit2.Response
 import retrofit2.http.Body
@@ -31,4 +32,9 @@ interface ApiService {
     suspend fun insertarUsuario(
         @Body usuario: Usuario
     ): Response<Unit>
+
+
+
+    @GET("articulos")
+    suspend fun getArticulos():List<Articulo>
 }
