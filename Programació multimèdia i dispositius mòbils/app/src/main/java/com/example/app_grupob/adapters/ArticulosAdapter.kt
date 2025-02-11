@@ -7,9 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_grupob.R
 import com.example.app_grupob.databinding.ItemArticuloBinding
+import com.example.app_grupob.listeners.OnClickArticuloListener
 import com.example.app_grupob.pojos.Articulo
+import com.example.app_grupob.retrofit.RetrofitInstance
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ArticulosAdapter(private val articulos:List<Articulo>, private val totalArticulos:Int) : RecyclerView.Adapter<ArticulosAdapter.ViewHolder>() {
+class ArticulosAdapter(private val articulos:List<Articulo>, private val listener: OnClickArticuloListener) : RecyclerView.Adapter<ArticulosAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemArticuloBinding.bind(view)
@@ -24,33 +31,16 @@ class ArticulosAdapter(private val articulos:List<Articulo>, private val totalAr
     override fun getItemCount(): Int = articulos.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val articulo1 = articulos[(position * 2) - 1]
+        var articulo:Articulo = articulos[position]
 
         with(holder) {
-            binding.tvTituloArticulo1.text = articulo1.titulo
-            binding.tvPrecioArticulo1.text = articulo1.descripcion
-            //Picasso.get().load(articulo1.imagen).into(binding.imgArticulo1)
+            binding.tvTituloArticulo.text = articulo.titulo
+            binding.tvPrecioArticulo.text = String.format(articulo.precio.toString() + "€")
+            Picasso.get().load("http://10.249.99.206:8080/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
 
-            binding.cardViewArticulo1.setOnClickListener {
-                Log.e("PRUEBA", "Titulo del articulo: ${articulo1.titulo}")
+            binding.cardViewArticulo.setOnClickListener {
+                listener.mostrarArticulo(articulo)
             }
         }
-
-        var articulo2:Articulo
-        if (position * 2 >= totalArticulos) {
-            articulo2 = articulos[(position * 2) - 1]
-
-            with(holder) {
-                binding.tvTituloArticulo2.text = articulo2.titulo
-                binding.tvPrecioArticulo2.text = articulo2.descripcion
-                //Picasso.get().load(articulo2.imagen).into(binding.imgArticulo2)
-
-                binding.cardViewArticulo2.setOnClickListener {
-                    Log.e("PRUEBA", "Titulo del articulo: ${articulo2.titulo}")
-                }
-            }
-        }
-
-
     }
 }

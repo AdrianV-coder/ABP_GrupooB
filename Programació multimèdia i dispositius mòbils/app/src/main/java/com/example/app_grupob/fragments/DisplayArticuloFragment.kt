@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.app_grupob.R
-import com.example.app_grupob.databinding.FragmentConfigurationBinding
+import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
 import com.example.app_grupob.databinding.FragmentHomeBinding
+import com.example.app_grupob.pojos.Articulo
 
-class ConfigurationFragment : Fragment() {
-    private lateinit var binding: FragmentConfigurationBinding
+class DisplayArticuloFragment(articulo:Articulo) : Fragment() {
+    private lateinit var binding: FragmentDisplayArticuloBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentConfigurationBinding.inflate(inflater, container, false)
-
-
+        binding = FragmentDisplayArticuloBinding.inflate(inflater, container, false)
 
         return binding.root
     }

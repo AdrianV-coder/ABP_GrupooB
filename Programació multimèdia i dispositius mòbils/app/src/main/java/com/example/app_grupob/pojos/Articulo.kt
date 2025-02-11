@@ -1,8 +1,11 @@
 package com.example.app_grupob.pojos
 
-class Articulo(
+data class Articulo(
+    val id:Int,
     val titulo:String,
     val descripcion:String,
+    val precio:Double,
     val fechaCreacion:String,
-    val usuario:Usuario
+    val usuario:UsuarioArticulo,
+    val foto:Foto
 )

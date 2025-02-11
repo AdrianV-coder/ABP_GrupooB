@@ -12,7 +12,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.app_grupob.R
 import com.example.app_grupob.databinding.ActivityWelcomeBinding
 import com.example.app_grupob.pojos.Usuario
+import com.example.app_grupob.pojos.UsuarioEntity
 import com.example.app_grupob.retrofit.RetrofitInstance
+import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,6 +24,7 @@ class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
     private var loginExpanded = false
     private var registerExpanded = false
+    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +33,12 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*
-        Se deben hacer 2 desplegables (los pondrá Pau), tanto si se registra o se logea, se debe
-        hacer una llamada a la API mediante el correo y guardar el usuario en Room para usos futuros.
-
-        Tanto en el caso de registro y login, se debe hacer una comprobacion de si existe el correo,
-        haciendo una llamada al endpoint de la API.
-
-        En caso de login, se debe hacer una comprobación de si la contraseña coincide con el correo.
-
-        Si ya existe un usuario en Room, saltarse esta Activity.
-        */
+        CoroutineScope(Dispatchers.IO).launch {
+            if (UsuarioApplication.database.usuarioDao().getUsuario().isNotEmpty()) {
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         binding.llLogin.setOnClickListener {
             loginExpanded = !loginExpanded
@@ -58,11 +56,6 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.btnRegister.setOnClickListener {
             comprobarRegistro()
-        }
-
-        binding.botonAdmin.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -94,7 +87,6 @@ class WelcomeActivity : AppCompatActivity() {
 
     fun comprobarLogin() {
         if (binding.etLoginEmail.text.isNotEmpty() && binding.etLoginPassword.text.isNotEmpty()) {
-            val context = this
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val correo = binding.etLoginEmail.text.toString()
@@ -103,8 +95,9 @@ class WelcomeActivity : AppCompatActivity() {
 
                     if (existe) {
                         val usuario:Usuario = RetrofitInstance.api.getUsuarioCorreo(correo)
-                        // Guardar usuario en Room
-                        // Pau va perfa que no te done palo, fes-ho perfa
+
+                        val usuarioEntity = UsuarioEntity(null, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud)
+                        UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
 
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
@@ -133,10 +126,14 @@ class WelcomeActivity : AppCompatActivity() {
                         val existe = RetrofitInstance.api.getUsuarioExiste(correo)
 
                         if (!existe) {
-                            val usuario = Usuario("Paco", "Perez Pecia", correo, contrasena, 0.0, 0.0)
                             // Acabar el formulario de Registro
-                            // Guardar el usuario en Room
+                            val usuario = Usuario("Joaquin", "Tomas Guerra", correo, contrasena, 0.0, 0.0)
+
+                            val usuarioEntity = UsuarioEntity(null, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud)
+                            UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
+
                             RetrofitInstance.api.insertarUsuario(usuario)
+
                             val intent = Intent(context, MainActivity::class.java)
                             startActivity(intent)
                         } else {

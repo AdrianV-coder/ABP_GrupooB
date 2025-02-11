@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app_grupob.R
 import com.example.app_grupob.activities.MainActivity
 import com.example.app_grupob.activities.WelcomeActivity
+import com.example.app_grupob.room.UsuarioApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class MeFragment(contextoMainActivity: Context) : Fragment() {
-    private val contexto = contextoMainActivity
-
+class MeFragment: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,9 +64,14 @@ class MeFragment(contextoMainActivity: Context) : Fragment() {
         }
 
         cardViewCerrarSesion.setOnClickListener {
-            // Quitar el usuario de Room
+            CoroutineScope(Dispatchers.IO).launch {
+                val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
+                for (i in 0..usuario.size) {
+                    UsuarioApplication.database.usuarioDao().deleteUsuario(usuario[i])
+                }
+            }
 
-            val intent = Intent(contexto, WelcomeActivity::class.java)
+            val intent = Intent(context, WelcomeActivity::class.java)
             startActivity(intent)
         }
 

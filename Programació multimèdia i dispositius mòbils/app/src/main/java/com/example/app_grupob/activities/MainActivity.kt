@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, MailboxFragment())
                 .commit()
             4 -> supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, MeFragment(this))
+                .replace(R.id.fragmentContainer, MeFragment())
                 .commit()
         }
 
