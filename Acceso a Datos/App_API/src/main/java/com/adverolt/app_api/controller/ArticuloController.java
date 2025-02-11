@@ -1,8 +1,6 @@
 package com.adverolt.app_api.controller;
 
 import com.adverolt.app_api.model.Articulo;
-import com.adverolt.app_api.model.dto.articulo.ArticuloRequestDto;
-import com.adverolt.app_api.model.dto.articulo.ArticuloResponseDto;
 import com.adverolt.app_api.service.IArticuloService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +21,29 @@ public class ArticuloController {
     private ModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<ArticuloResponseDto>> listar() {
+    public ResponseEntity<List<Articulo>> listar() {
         return ResponseEntity.ok(service.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticuloResponseDto> listarPorId(@PathVariable("id") Integer id) {
-        ArticuloResponseDto articulo = service.listarPorId(id);
+    public ResponseEntity<Articulo> listarPorId(@PathVariable("id") Integer id) {
+        Articulo articulo = service.listarPorId(id);
         return articulo != null ? ResponseEntity.ok(articulo) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<Articulo> registrar(@RequestBody ArticuloRequestDto dto) {
+    public ResponseEntity<Articulo> registrar(@RequestBody Articulo dto) {
         try {
             Articulo articulo = service.registrar(dto);
             return new ResponseEntity<>(articulo, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            e.printStackTrace();
         }
+        return null;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificar(@PathVariable("id") Integer id, @RequestBody ArticuloRequestDto articuloDto) {
+    public ResponseEntity<?> modificar(@PathVariable("id") Integer id, @RequestBody Articulo articuloDto) {
         try {
             Articulo actualizado = service.modificar(id, articuloDto);
             return ResponseEntity.ok(actualizado);
