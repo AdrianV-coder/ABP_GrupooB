@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_grupob.R
@@ -38,6 +39,9 @@ class MainActivity : AppCompatActivity() {
             cambioFragment()
             true
         }
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.light_grey)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.white)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
