@@ -9,10 +9,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
     // Métodos específicos de esta entidad diferentes al CRUD
+    // @Query("FROM Usuario u WHERE u.correo LIKE :correo AND u.contrasena LIKE :contrasena")
+    // Usuario findByEmailAndPassword(@Param("correo") String correo, @Param("contrasena") String contrasena);
 
     //metodo que retorne bool si existe el correo del usuario em la base de datos
-    @Query("FROM Usuario u WHERE u.correo LIKE :correo AND u.contrasena LIKE :contrasena")
-    Usuario findByEmailAndPassword(@Param("correo") String correo, @Param("contrasena") String contrasena);
+    Usuario findByCorreoAndContrasena( String correo,  String contrasena);
 
     @Query("FROM Usuario u WHERE u.correo LIKE :correo")
     Usuario findByEmail(@Param("correo") String correo);

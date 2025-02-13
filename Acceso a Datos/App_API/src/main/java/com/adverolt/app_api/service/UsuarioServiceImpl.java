@@ -66,7 +66,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
     @Override
     public Boolean comprobarUsuarioCorrecto(String email, String contrasenya) throws Exception {
-        Usuario usuario = repository.findByEmailAndPassword(email, contrasenya);
+        Usuario usuario = repository.findByCorreoAndContrasena(email, contrasenya);
         return usuario != null;
     }
 
