@@ -35,6 +35,9 @@
     <string name="item_mailbox">Mailbox</string>
     <string name="item_me">Me</string>
 
+    <!-- Fragment Me (acabar) -->
+    <string name="products_uploaded">Productos Subidos</string>
+
     <!-- FAQ (hecho)
     <string name="faq_question_1">¿Cómo puedo vender un artículo en la aplicación?</string>
     <string name="faq_answer_1">Para vender un artículo, solo necesitas crear una cuenta en la aplicación y luego acceder a la sección \'Vender\'. Desde ahí, podrás agregar fotos, una descripción detallada, el precio y la categoría de tu artículo. Después, solo tienes que publicar el anuncio y esperar a que los compradores se pongan en contacto contigo.</string>

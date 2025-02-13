@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_grupob.R
+import com.example.app_grupob.activities.ConfigurationActivity
 import com.example.app_grupob.activities.MainActivity
 import com.example.app_grupob.activities.WelcomeActivity
 import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
@@ -94,10 +95,8 @@ class MeFragment: Fragment() {
         }
 
         binding.cardViewConfiguracion.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ConfigurationFragment())
-                .addToBackStack(null)
-                .commit()
+            val intent = Intent(context, ConfigurationActivity::class.java)
+            startActivity(intent)
         }
 
         binding.cardViewAyuda.setOnClickListener {

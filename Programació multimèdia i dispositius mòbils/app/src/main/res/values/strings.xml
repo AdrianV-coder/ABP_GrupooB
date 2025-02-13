@@ -35,6 +35,9 @@
     <string name="item_mailbox">Mailbox</string>
     <string name="item_me">Me</string>
 
+    <!-- Fragment Me (acabar) -->
+    <string name="products_uploaded">Products Uploaded</string>
+
     <!-- FAQ (hecho)
     <string name="faq_question_1">How can I sell an item in the app?</string>
     <string name="faq_answer_1">To sell an item, simply create an account in the app, then go to the \'Sell\' section. From there, you can upload photos, write a detailed description, set a price, and select a category for your item. After that, just publish the listing and wait for buyers to contact you.</string>
