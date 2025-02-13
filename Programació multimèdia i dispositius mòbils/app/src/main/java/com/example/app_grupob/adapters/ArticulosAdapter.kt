@@ -36,7 +36,7 @@ class ArticulosAdapter(private val articulos:List<Articulo>, private val listene
         with(holder) {
             binding.tvTituloArticulo.text = articulo.titulo
             binding.tvPrecioArticulo.text = String.format(articulo.precio.toString() + "€")
-            Picasso.get().load("http://10.249.99.206:8080/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
+            Picasso.get().load("http://4.211.191.132/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
 
             binding.cardViewArticulo.setOnClickListener {
                 listener.mostrarArticulo(articulo)

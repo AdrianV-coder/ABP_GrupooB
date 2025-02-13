@@ -108,9 +108,9 @@ class MeFragment: Fragment() {
 
         binding.cardViewCerrarSesion.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
-                for (i in 0..usuario.size) {
-                    UsuarioApplication.database.usuarioDao().deleteUsuario(usuario[i])
+                val usuarios = UsuarioApplication.database.usuarioDao().getUsuario()
+                for (user in usuarios) {
+                    UsuarioApplication.database.usuarioDao().deleteUsuario(user)
                 }
             }
 
