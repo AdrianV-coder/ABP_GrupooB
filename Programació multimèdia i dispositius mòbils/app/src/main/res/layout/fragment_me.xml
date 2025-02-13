@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColor="@color/dark_grey"
-                    android:text="Productos"
+                    android:text="Productos Subidos"
                     android:layout_marginStart="16dp"
                     app:layout_constraintStart_toEndOf="@+id/imgProductos"
                     app:layout_constraintTop_toTopOf="@id/imgProductos"

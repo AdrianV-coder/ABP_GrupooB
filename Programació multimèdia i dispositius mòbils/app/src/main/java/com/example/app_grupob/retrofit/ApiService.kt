@@ -37,4 +37,10 @@ interface ApiService {
 
     @GET("articulos")
     suspend fun getArticulos():List<Articulo>
+
+
+    @GET("valoraciones/{id}")
+    suspend fun getValoraciones(
+        @Path("id") id:String
+    ):List<Int>
 }
