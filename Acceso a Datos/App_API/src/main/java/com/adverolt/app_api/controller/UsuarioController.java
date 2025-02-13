@@ -1,8 +1,11 @@
 package com.adverolt.app_api.controller;
 
+import com.adverolt.app_api.model.Articulo;
 import com.adverolt.app_api.model.Usuario;
 import com.adverolt.app_api.model.dto.usuario.UsuarioRequestDto;
 import com.adverolt.app_api.model.dto.usuario.UsuarioResponseDto;
+import com.adverolt.app_api.repository.IArticuloRepository;
+import com.adverolt.app_api.repository.IUsuarioRepository;
 import com.adverolt.app_api.service.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
+
     @Autowired
     private IUsuarioService service;
+
+    @Autowired
+    private IUsuarioRepository usuarioRepository;
+
+    @Autowired
+    private IArticuloRepository articuloRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -97,5 +107,37 @@ public class UsuarioController {
         }
 
         return new ResponseEntity<>(usuario, HttpStatus.OK);
+    }
+
+    ////////////////////////////////////////
+         /// Metodos de favoritos ///
+    ////////////////////////////////////////
+    ///
+    // Agregar artículo a favoritos
+    @PostMapping("/{usuarioId}/favoritos/{articuloId}")
+    public ResponseEntity<String> agregarFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Articulo articulo = articuloRepository.findById(articuloId)
+                .orElseThrow(() -> new RuntimeException("Artículo no encontrado"));
+
+        usuario.getArticulosFavoritos().add(articulo);
+        usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok("Artículo agregado a favoritos");
+    }
+
+    // Eliminar artículo de favoritos
+    @DeleteMapping("/{usuarioId}/favoritos/{articuloId}")
+    public ResponseEntity<String> eliminarFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Articulo articulo = articuloRepository.findById(articuloId)
+                .orElseThrow(() -> new RuntimeException("Artículo no encontrado"));
+
+        usuario.getArticulosFavoritos().remove(articulo);
+        usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok("Artículo eliminado de favoritos");
     }
 }

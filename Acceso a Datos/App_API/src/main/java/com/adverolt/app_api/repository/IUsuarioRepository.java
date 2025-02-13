@@ -17,4 +17,8 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("FROM Usuario u WHERE u.correo LIKE :correo")
     Usuario findByEmail(@Param("correo") String correo);
+
+    //List<Integer> getArticulosFavoritos
+    //Articulo asignarIdArticuloFavorito
+    //bool esArticuloFavorito(Integer idaArticulo)
 }

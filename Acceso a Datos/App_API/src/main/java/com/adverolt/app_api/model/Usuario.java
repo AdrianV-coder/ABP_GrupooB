@@ -1,6 +1,10 @@
 package com.adverolt.app_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -25,6 +29,15 @@ public class Usuario {
 
     @Column(nullable = false)
     private double latitud;
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "favoritos",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "articulo_id")
+    )
+    private List<Articulo> articulosFavoritos;
 
     // CONSTRUCTORES
     public Usuario() {
@@ -80,6 +93,13 @@ public class Usuario {
     }
     public void setLatitud(double latitud) {
         this.latitud = latitud;
+    }
+    public List<Articulo> getArticulosFavoritos() {
+        return articulosFavoritos;
+    }
+
+    public void setArticulosFavoritos(List<Articulo> articulosFavoritos) {
+        this.articulosFavoritos = articulosFavoritos;
     }
 }
 
