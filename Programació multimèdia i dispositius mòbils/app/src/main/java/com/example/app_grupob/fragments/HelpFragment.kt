@@ -5,56 +5,64 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import com.example.app_grupob.R
+import com.example.app_grupob.databinding.FragmentHelpBinding
+import com.example.app_grupob.databinding.FragmentMeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HelpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HelpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentHelpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_help, container, false)
+        binding = FragmentHelpBinding.inflate(inflater, container, false)
+
+        binding.cardView1.setOnClickListener {
+            val cardViewPulsado = binding.expandableView1
+            val visible = binding.expandableView1.isVisible
+            mostrarPregunta(cardViewPulsado, visible)
+        }
+
+        binding.cardView2.setOnClickListener {
+            val cardViewPulsado = binding.expandableView2
+            val visible = binding.expandableView2.isVisible
+            mostrarPregunta(cardViewPulsado, visible)
+        }
+
+        binding.cardView3.setOnClickListener {
+            val cardViewPulsado = binding.expandableView3
+            val visible = binding.expandableView3.isVisible
+            mostrarPregunta(cardViewPulsado, visible)
+        }
+
+        binding.cardView4.setOnClickListener {
+            val cardViewPulsado = binding.expandableView4
+            val visible = binding.expandableView4.isVisible
+            mostrarPregunta(cardViewPulsado, visible)
+        }
+
+        binding.cardView5.setOnClickListener {
+            val cardViewPulsado = binding.expandableView5
+            val visible = binding.expandableView5.isVisible
+            mostrarPregunta(cardViewPulsado, visible)
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HelpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HelpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun mostrarPregunta(cardView: LinearLayout, visible: Boolean) {
+        binding.expandableView1.visibility = View.GONE
+        binding.expandableView2.visibility = View.GONE
+        binding.expandableView3.visibility = View.GONE
+        binding.expandableView4.visibility = View.GONE
+        binding.expandableView5.visibility = View.GONE
+
+        if (!visible) {
+            cardView.visibility = View.VISIBLE
+        }
     }
 }

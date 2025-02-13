@@ -25,7 +25,7 @@
 
     <!-- Login (borrar) -->
     <string name="tvUsuario">Usuario:</string>
-    <string name="tvContrasenya">"Contraseña: "</string>
+    <string name="tvContrasenya">Contraseña:</string>
     <string name="btnEntrar">Acceder</string>
 
     <!-- Menu Inferior (modificar) -->
@@ -35,7 +35,18 @@
     <string name="item_mailbox">Mailbox</string>
     <string name="item_me">Me</string>
 
-
+    <!-- FAQ (hecho)
+    <string name="faq_question_1">¿Cómo puedo vender un artículo en la aplicación?</string>
+    <string name="faq_answer_1">Para vender un artículo, solo necesitas crear una cuenta en la aplicación y luego acceder a la sección \'Vender\'. Desde ahí, podrás agregar fotos, una descripción detallada, el precio y la categoría de tu artículo. Después, solo tienes que publicar el anuncio y esperar a que los compradores se pongan en contacto contigo.</string>
+    <string name="faq_question_2">¿Cómo puedo asegurarme de que el artículo que quiero comprar está en buen estado?</string>
+    <string name="faq_answer_2">En la descripción del artículo, el vendedor debe incluir detalles sobre el estado del producto, y puedes solicitar más fotos o información adicional antes de hacer la compra. Además, te recomendamos leer las opiniones de otros compradores sobre el vendedor para tener más confianza en tu compra.</string>
+    <string name="faq_question_3">¿Qué métodos de pago son aceptados?</string>
+    <string name="faq_answer_3">Aceptamos varios métodos de pago seguros, como tarjetas de crédito y débito, transferencias bancarias y plataformas de pago en línea (como PayPal o MercadoPago). Asegúrate de confirmar el método de pago con el vendedor antes de realizar la transacción.</string>
+    <string name="faq_question_4">¿Puedo devolver un artículo si no estoy satisfecho con él?</string>
+    <string name="faq_answer_4">La política de devoluciones depende del vendedor. Es importante revisar las condiciones del producto antes de comprarlo y asegurarse de que está de acuerdo con las políticas del vendedor. Si no estás satisfecho con tu compra, comunícate directamente con el vendedor para discutir la posibilidad de una devolución o cambio.</string>
+    <string name="faq_question_5">¿Qué debo hacer si tengo problemas con un comprador o vendedor?</string>
+    <string name="faq_answer_5">Si experimentas algún problema con un comprador o vendedor, puedes ponerte en contacto con nuestro equipo de soporte a través de la aplicación. También puedes calificar y dejar comentarios sobre la transacción para ayudar a otros usuarios a tomar decisiones informadas.</string>
+-->
     <!-- Configuracion (hecho) -->
     <string-array name="idioma">
         <item name="espanyol">Español</item>

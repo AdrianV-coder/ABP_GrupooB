@@ -54,17 +54,21 @@ class MainActivity : AppCompatActivity() {
         when (posicion) {
             0 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, HomeFragment())
+                .addToBackStack(null)
                 .commit()
             1 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, FavoritesFragment())
+                .addToBackStack(null)
                 .commit()
             2 -> Toast.makeText(this, "Aún no disponible.", Toast.LENGTH_SHORT).show()
             // 2 -> intent = Intent(this, AddActivity::class.java)
             3 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, MailboxFragment())
+                .addToBackStack(null)
                 .commit()
             4 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, MeFragment())
+                .addToBackStack(null)
                 .commit()
         }
 
