@@ -1,9 +1,11 @@
 package com.adverolt.app_api.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Articulo {
@@ -32,20 +34,37 @@ public class Articulo {
     @OneToOne(mappedBy = "articulo", cascade = CascadeType.ALL)
     private Foto foto;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
+
+    @ManyToMany(mappedBy = "articulosFavoritos")
+    private List<Usuario> usuariosQueFav;
+
     // CONSTRUCTORES
     public Articulo() {
     }
 
-    public Articulo(String titulo, String descripcion, Double precio, Usuario usuario, Foto foto) {
+    public Articulo(String titulo, String descripcion, Double precio, Usuario usuario, Foto foto, Categoria categoria) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.fechaCreacion = LocalDate.now();
         this.usuario = usuario;
         this.foto = foto;
+        this.categoria = categoria;
     }
 
     // GETTERS Y SETTERS
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public Foto getFoto() {
         return foto;

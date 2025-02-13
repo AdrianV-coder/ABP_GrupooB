@@ -32,14 +32,14 @@ public class ArticuloController {
     }
 
     @PostMapping
-    public ResponseEntity<Articulo> registrar(@RequestBody Articulo dto) {
+    public ResponseEntity<?> registrar(@RequestBody Articulo dto) {
         try {
             Articulo articulo = service.registrar(dto);
             return new ResponseEntity<>(articulo, HttpStatus.CREATED);
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al registrar artículo: " + e.getMessage());
         }
-        return null;
     }
 
     @PutMapping("/{id}")
