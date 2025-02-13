@@ -19,7 +19,9 @@ class PremiumFragment : Fragment() {
     ): View? {
         binding = FragmentPremiumBinding.inflate(inflater, container, false)
 
+        // Si el usuario es premium, el boton estara desactivado.
         binding.btnConseguirPremium.setOnClickListener {
+            // Se debe hacer llamada a Odoo con el Usuario pasado.
             Toast.makeText(context, "Has conseguido el Premium.", Toast.LENGTH_SHORT).show()
         }
 
