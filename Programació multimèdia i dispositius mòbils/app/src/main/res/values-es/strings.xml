@@ -49,7 +49,7 @@
     <string name="faq_answer_4">La política de devoluciones depende del vendedor. Es importante revisar las condiciones del producto antes de comprarlo y asegurarse de que está de acuerdo con las políticas del vendedor. Si no estás satisfecho con tu compra, comunícate directamente con el vendedor para discutir la posibilidad de una devolución o cambio.</string>
     <string name="faq_question_5">¿Qué debo hacer si tengo problemas con un comprador o vendedor?</string>
     <string name="faq_answer_5">Si experimentas algún problema con un comprador o vendedor, puedes ponerte en contacto con nuestro equipo de soporte a través de la aplicación. También puedes calificar y dejar comentarios sobre la transacción para ayudar a otros usuarios a tomar decisiones informadas.</string>
--->
+ -->
     <!-- Configuracion (hecho) -->
     <string-array name="idioma">
         <item name="espanyol">Español</item>

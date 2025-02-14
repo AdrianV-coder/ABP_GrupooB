@@ -96,7 +96,7 @@ class WelcomeActivity : AppCompatActivity() {
                     if (existe) {
                         val usuario:Usuario = RetrofitInstance.api.getUsuarioCorreo(correo)
 
-                        val usuarioEntity = UsuarioEntity(null, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud)
+                        val usuarioEntity = UsuarioEntity(usuario.id, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud)
                         UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
 
                         val intent = Intent(context, MainActivity::class.java)
@@ -127,12 +127,14 @@ class WelcomeActivity : AppCompatActivity() {
 
                         if (!existe) {
                             // Acabar el formulario de Registro
-                            val usuario = Usuario("Joaquin", "Tomas Guerra", correo, contrasena, 0.0, 0.0)
+                            val usuarioCreado = Usuario(-1,"Joaquin", "Tomas Guerra", correo, contrasena, 0.0, 0.0)
 
-                            val usuarioEntity = UsuarioEntity(null, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud)
+                            RetrofitInstance.api.insertarUsuario(usuarioCreado)
+
+                            val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioCreado.correo)
+
+                            val usuarioEntity = UsuarioEntity(usuarioNuevo.id, usuarioNuevo.nombre, usuarioNuevo.apellidos, usuarioNuevo.correo, usuarioCreado.contrasena, usuarioNuevo.longitud, usuarioNuevo.latitud)
                             UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
-
-                            RetrofitInstance.api.insertarUsuario(usuario)
 
                             val intent = Intent(context, MainActivity::class.java)
                             startActivity(intent)

@@ -64,8 +64,10 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, FavoritesFragment())
                 .addToBackStack(null)
                 .commit()
-            2 -> Toast.makeText(this, "Aún no disponible.", Toast.LENGTH_SHORT).show()
-            // 2 -> intent = Intent(this, AddActivity::class.java)
+            2 -> {
+                val intent = Intent(this, UploadArticuloActivity::class.java)
+                startActivity(intent)
+            }
             3 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, MailboxFragment())
                 .addToBackStack(null)
@@ -75,10 +77,6 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
-
-        //if (posicion == 2) {
-        //    startActivity(intent)
-        //}
     }
 
     private fun aplicarIdiomaGuardado() {

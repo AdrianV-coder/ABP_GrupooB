@@ -78,7 +78,7 @@ class DisplayArticuloFragment(articuloPulsado:Articulo) : Fragment() {
 
         binding.tvTituloArticulo.text = articulo.titulo
         binding.tvPrecioArticulo.text = String.format(articulo.precio.toString() + "€")
-        Picasso.get().load("http://4.211.191.132/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
+        Picasso.get().load("http://4.211.191.132/App_Api/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
 
         binding.btnComprar.setOnClickListener {
 

@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProductsFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvArticulosPropios"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Products Fragment" />
+        tools:listitem="@layout/item_own_articulo"/>
 
 </FrameLayout>

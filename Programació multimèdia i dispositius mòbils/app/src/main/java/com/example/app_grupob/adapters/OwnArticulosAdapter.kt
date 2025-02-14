@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_grupob.R
 import com.example.app_grupob.databinding.ItemArticuloBinding
+import com.example.app_grupob.databinding.ItemOwnArticuloBinding
 import com.example.app_grupob.listeners.OnClickArticuloListener
+import com.example.app_grupob.listeners.OnDeleteArticuloListener
 import com.example.app_grupob.pojos.Articulo
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.squareup.picasso.Picasso
@@ -16,15 +18,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ArticulosAdapter(private val articulos:List<Articulo>, private val listener: OnClickArticuloListener) : RecyclerView.Adapter<ArticulosAdapter.ViewHolder>() {
+class OwnArticulosAdapter(private val articulos:List<Articulo>, private val listener: OnDeleteArticuloListener) : RecyclerView.Adapter<OwnArticulosAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemArticuloBinding.bind(view)
+        val binding = ItemOwnArticuloBinding.bind(view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
-        val view = LayoutInflater.from(context).inflate(R.layout.item_articulo , parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_own_articulo , parent, false)
         return ViewHolder(view)
     }
 
@@ -38,8 +40,8 @@ class ArticulosAdapter(private val articulos:List<Articulo>, private val listene
             binding.tvPrecioArticulo.text = String.format(articulo.precio.toString() + "€")
             Picasso.get().load("http://4.211.191.132/App_Api/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
 
-            binding.cardViewArticulo.setOnClickListener {
-                listener.mostrarArticulo(articulo)
+            binding.btnEliminarArticulo.setOnClickListener {
+                listener.eliminarArticulo(articulo)
             }
         }
     }

@@ -1,60 +1,86 @@
 package com.example.app_grupob.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.app_grupob.R
+import com.example.app_grupob.activities.MainActivity
+import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
+import com.example.app_grupob.databinding.FragmentUserSettingsBinding
+import com.example.app_grupob.pojos.ArticuloRequest
+import com.example.app_grupob.pojos.Usuario
+import com.example.app_grupob.pojos.UsuarioEntity
+import com.example.app_grupob.retrofit.RetrofitInstance
+import com.example.app_grupob.room.UsuarioApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UserSettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UserSettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentUserSettingsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_settings, container, false)
+        binding = FragmentUserSettingsBinding.inflate(inflater, container, false)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+
+            withContext(Dispatchers.Main) {
+                binding.etNombre.setText(usuario.nombre)
+                binding.etApellidos.setText(usuario.apellidos)
+                binding.etContrasena.setText(usuario.contrasena)
+            }
+        }
+
+        binding.btnActualizarPerfil.setOnClickListener {
+            comprobarFormulario()
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UserSettingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UserSettingsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    fun comprobarFormulario() {
+        if (binding.etNombre.text.toString().isNotBlank() && binding.etApellidos.text.toString().isNotBlank() && binding.etContrasena.text.toString().isNotBlank()) {
+            val nombre = binding.etNombre.text.toString()
+            val apellidos = binding.etApellidos.text.toString()
+            val contrasena = binding.etContrasena.text.toString()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+                val usuario = Usuario(usuarioActual.id.toString().toInt(), nombre, apellidos, usuarioActual.correo, contrasena, usuarioActual.longitud, usuarioActual.latitud)
+
+                RetrofitInstance.api.modificarUsuario(usuario.id.toString(), usuario)
+                modificarRoom(usuario)
             }
+
+            Toast.makeText(context, "Perfil actualizado.", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, UserSettingsFragment())
+                .commit()
+        } else {
+            Toast.makeText(context, "Debes de rellenar todos los campos.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun modificarRoom(usuario:Usuario) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarios = UsuarioApplication.database.usuarioDao().getUsuario()
+            for (user in usuarios) {
+                UsuarioApplication.database.usuarioDao().deleteUsuario(user)
+            }
+
+            val usuarioEntity = UsuarioEntity(usuario.id, usuario.nombre, usuario.apellidos, usuario.correo, usuario.contrasena, usuario.longitud, usuario.latitud)
+            UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
+        }
     }
 }

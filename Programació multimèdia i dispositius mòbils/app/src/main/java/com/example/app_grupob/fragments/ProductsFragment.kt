@@ -5,56 +5,81 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.app_grupob.R
+import com.example.app_grupob.adapters.ArticulosAdapter
+import com.example.app_grupob.adapters.OwnArticulosAdapter
+import com.example.app_grupob.databinding.FragmentHomeBinding
+import com.example.app_grupob.databinding.FragmentProductsBinding
+import com.example.app_grupob.listeners.OnClickArticuloListener
+import com.example.app_grupob.listeners.OnDeleteArticuloListener
+import com.example.app_grupob.pojos.Articulo
+import com.example.app_grupob.retrofit.RetrofitInstance
+import com.example.app_grupob.room.UsuarioApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProductsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class ProductsFragment : Fragment(), OnDeleteArticuloListener {
+    private lateinit var binding: FragmentProductsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_products, container, false)
-    }
+        binding = FragmentProductsBinding.inflate(inflater, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val recyclerViewArticulos = binding.rvArticulosPropios
+        recyclerViewArticulos.layoutManager = GridLayoutManager(context, 2)
+
+        val listener:OnDeleteArticuloListener = this
+        CoroutineScope(Dispatchers.IO).launch {
+            var articulos = RetrofitInstance.api.getArticulos()
+            var articulosComprables: MutableList<Articulo> = mutableListOf()
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
+
+            for (articulo: Articulo in articulos) {
+                if (articulo.usuario.id.equals(usuario.get(0).id)) {
+                    articulosComprables.add(articulo)
                 }
             }
+
+            withContext(Dispatchers.Main) {
+                recyclerViewArticulos.adapter = OwnArticulosAdapter(articulosComprables, listener)
+            }
+        }
+
+        return binding.root
+    }
+
+    override fun eliminarArticulo(articulo: Articulo) {
+        val dialog = context?.let {
+            AlertDialog.Builder(it)
+                .setTitle("Eliminar artículo")
+                .setMessage("¿Estás seguro de eliminar el artículo?")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    eliminarArticuloDeLaBaseDeDatos(articulo)
+                    Toast.makeText(it, "Artículo eliminado", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancelar") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                }
+                .create()
+        }
+
+        dialog?.show()
+    }
+
+    fun eliminarArticuloDeLaBaseDeDatos(articulo: Articulo) {
+        CoroutineScope(Dispatchers.IO).launch {
+            RetrofitInstance.api.eliminarArticulo(articulo.id.toString())
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, ProductsFragment())
+            .commit()
     }
 }
