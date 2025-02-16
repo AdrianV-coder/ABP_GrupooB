@@ -1,6 +1,8 @@
 package com.example.app_grupob.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -15,12 +17,14 @@ import com.example.app_grupob.fragments.FavoritesFragment
 import com.example.app_grupob.fragments.HomeFragment
 import com.example.app_grupob.fragments.MailboxFragment
 import com.example.app_grupob.fragments.MeFragment
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var posicion = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        aplicarIdiomaGuardado()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
@@ -60,8 +64,10 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, FavoritesFragment())
                 .addToBackStack(null)
                 .commit()
-            2 -> Toast.makeText(this, "Aún no disponible.", Toast.LENGTH_SHORT).show()
-            // 2 -> intent = Intent(this, AddActivity::class.java)
+            2 -> {
+                val intent = Intent(this, UploadArticuloActivity::class.java)
+                startActivity(intent)
+            }
             3 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, MailboxFragment())
                 .addToBackStack(null)
@@ -71,9 +77,24 @@ class MainActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+    }
 
-        //if (posicion == 2) {
-        //    startActivity(intent)
-        //}
+    private fun aplicarIdiomaGuardado() {
+        val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val idioma = prefs.getString("idioma", "es") ?: "es"
+        cambiarIdioma(this, idioma)
+    }
+
+    fun cambiarIdioma(context: Context, idioma: String) {
+        val locale = Locale(idioma)
+        Locale.setDefault(locale)
+
+        val config = Configuration()
+        config.setLocale(locale)
+
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+
+        val prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
+        prefs.edit().putString("idioma", idioma).apply()
     }
 }

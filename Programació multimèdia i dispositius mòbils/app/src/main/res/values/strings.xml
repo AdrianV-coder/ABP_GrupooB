@@ -35,6 +35,9 @@
     <string name="item_mailbox">Mailbox</string>
     <string name="item_me">Me</string>
 
+    <!-- Fragment Me (acabar) -->
+    <string name="products_uploaded">Products Uploaded</string>
+
     <!-- FAQ (hecho)
     <string name="faq_question_1">How can I sell an item in the app?</string>
     <string name="faq_answer_1">To sell an item, simply create an account in the app, then go to the \'Sell\' section. From there, you can upload photos, write a detailed description, set a price, and select a category for your item. After that, just publish the listing and wait for buyers to contact you.</string>
@@ -46,7 +49,7 @@
     <string name="faq_answer_4">Return policies depend on the seller. It\'s important to check the product conditions before purchasing and ensure you agree with the seller\'s policies. If you're not satisfied with your purchase, contact the seller directly to discuss the possibility of a return or exchange.</string>
     <string name="faq_question_5">What should I do if I have issues with a buyer or seller?</string>
     <string name="faq_answer_5">If you experience any issues with a buyer or seller, you can contact our support team through the app. You can also rate and leave feedback on the transaction to help other users make informed decisions.</string>
-    -->
+-->
     <!-- Configuracion (hecho) -->
     <string-array name="idioma">
         <item name="espanyol">Spanish</item>
@@ -58,4 +61,6 @@
         <item name="espanyol">es</item>
         <item name="ingles">en</item>
     </string-array>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

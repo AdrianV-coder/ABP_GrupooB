@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_grupob.R
+import com.example.app_grupob.activities.ConfigurationActivity
 import com.example.app_grupob.activities.MainActivity
 import com.example.app_grupob.activities.WelcomeActivity
 import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
@@ -94,10 +95,8 @@ class MeFragment: Fragment() {
         }
 
         binding.cardViewConfiguracion.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, ConfigurationFragment())
-                .addToBackStack(null)
-                .commit()
+            val intent = Intent(context, ConfigurationActivity::class.java)
+            startActivity(intent)
         }
 
         binding.cardViewAyuda.setOnClickListener {
@@ -109,9 +108,9 @@ class MeFragment: Fragment() {
 
         binding.cardViewCerrarSesion.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
-                for (i in 0..usuario.size) {
-                    UsuarioApplication.database.usuarioDao().deleteUsuario(usuario[i])
+                val usuarios = UsuarioApplication.database.usuarioDao().getUsuario()
+                for (user in usuarios) {
+                    UsuarioApplication.database.usuarioDao().deleteUsuario(user)
                 }
             }
 
