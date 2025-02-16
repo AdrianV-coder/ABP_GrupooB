@@ -47,7 +47,6 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDto> listarPorId(@PathVariable("id") Integer id){
         UsuarioResponseDto usuario = service.listarPorId(id);
-
         if (usuario == null) {
             // Código 404 No encontrado
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -114,30 +113,46 @@ public class UsuarioController {
     ////////////////////////////////////////
     ///
     // Agregar artículo a favoritos
-    @PostMapping("/{usuarioId}/favoritos/{articuloId}")
-    public ResponseEntity<String> agregarFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        Articulo articulo = articuloRepository.findById(articuloId)
-                .orElseThrow(() -> new RuntimeException("Artículo no encontrado"));
+         @PostMapping("/{usuarioId}/favoritos/{articuloId}")
+         public ResponseEntity<?> agregarFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
+             try {
+                 Usuario usuario = usuarioRepository.findById(usuarioId)
+                         .orElseThrow(() -> new RuntimeException("❌ Usuario con ID " + usuarioId + " no encontrado."));
+                 Articulo articulo = articuloRepository.findById(articuloId)
+                         .orElseThrow(() -> new RuntimeException("❌ Artículo con ID " + articuloId + " no encontrado."));
 
-        usuario.getArticulosFavoritos().add(articulo);
-        usuarioRepository.save(usuario);
+                 usuario.getArticulosFavoritos().add(articulo);
+                 usuarioRepository.saveAndFlush(usuario);
 
-        return ResponseEntity.ok("Artículo agregado a favoritos");
-    }
+                 return ResponseEntity.ok("✅ Artículo con ID " + articuloId + " agregado a favoritos del usuario " + usuarioId);
+             } catch (Exception e) {
+                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                         .body("⚠️ Error al agregar favorito: " + e.getMessage());
+             }
+         }
 
-    // Eliminar artículo de favoritos
     @DeleteMapping("/{usuarioId}/favoritos/{articuloId}")
-    public ResponseEntity<String> eliminarFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        Articulo articulo = articuloRepository.findById(articuloId)
-                .orElseThrow(() -> new RuntimeException("Artículo no encontrado"));
+    public ResponseEntity<?> eliminarFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
+        try {
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new RuntimeException("❌ Usuario con ID " + usuarioId + " no encontrado."));
+            Articulo articulo = articuloRepository.findById(articuloId)
+                    .orElseThrow(() -> new RuntimeException("❌ Artículo con ID " + articuloId + " no encontrado."));
 
-        usuario.getArticulosFavoritos().remove(articulo);
-        usuarioRepository.save(usuario);
+            boolean eliminado = usuario.getArticulosFavoritos().removeIf(a -> a.getId().equals(articuloId));
 
-        return ResponseEntity.ok("Artículo eliminado de favoritos");
+            if (!eliminado) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("⚠️ El artículo con ID " + articuloId + " no estaba en la lista de favoritos del usuario " + usuarioId);
+            }
+
+            usuarioRepository.saveAndFlush(usuario);
+
+            return ResponseEntity.ok("✅ Artículo con ID " + articuloId + " eliminado de favoritos del usuario " + usuarioId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("⚠️ Error al eliminar favorito: " + e.getMessage());
+        }
     }
+
 }

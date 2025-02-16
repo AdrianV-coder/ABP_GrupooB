@@ -35,6 +35,7 @@ public class ArticuloController {
     public ResponseEntity<?> registrar(@RequestBody Articulo dto) {
         try {
             Articulo articulo = service.registrar(dto);
+
             return new ResponseEntity<>(articulo, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -43,19 +44,23 @@ public class ArticuloController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificar(@PathVariable("id") Integer id, @RequestBody Articulo articuloDto) {
+    public ResponseEntity<Articulo> modificar(@PathVariable("id") Integer id, @RequestBody Articulo articuloDto) {
         try {
             Articulo actualizado = service.modificar(id, articuloDto);
             return ResponseEntity.ok(actualizado);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
         }
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable("id") Integer id) throws Exception {
-        service.eliminar(id);
-        return ResponseEntity.noContent().build();
+        try {
+            service.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
