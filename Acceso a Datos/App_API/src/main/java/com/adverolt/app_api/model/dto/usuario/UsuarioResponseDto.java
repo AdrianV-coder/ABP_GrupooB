@@ -1,6 +1,7 @@
 package com.adverolt.app_api.model.dto.usuario;
 
 public class UsuarioResponseDto {
+    private Integer id;
     private String nombre;
     private String apellidos;
     private String correo;
@@ -10,7 +11,9 @@ public class UsuarioResponseDto {
     // CONSTRUCTORES
     public UsuarioResponseDto() {
     }
-    public UsuarioResponseDto(String nombre, String apellidos, String correo, double longitud, double latitud) {
+
+    public UsuarioResponseDto(Integer id, String nombre, String apellidos, String correo, double longitud, double latitud) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
@@ -19,6 +22,15 @@ public class UsuarioResponseDto {
     }
 
     // GETTERS Y SETTERS
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
     public String getNombre() {
         return nombre;
     }
