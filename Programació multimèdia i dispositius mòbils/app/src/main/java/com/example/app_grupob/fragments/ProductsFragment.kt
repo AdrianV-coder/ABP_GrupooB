@@ -48,6 +48,14 @@ class ProductsFragment : Fragment(), OnDeleteArticuloListener {
             }
 
             withContext(Dispatchers.Main) {
+                if (articulosComprables.size == 0) {
+                    binding.txtProductosNoSubidos.visibility = View.VISIBLE
+                    binding.rvArticulosPropios.visibility = View.GONE
+                } else {
+                    binding.txtProductosNoSubidos.visibility = View.GONE
+                    binding.rvArticulosPropios.visibility = View.VISIBLE
+                }
+
                 recyclerViewArticulos.adapter = OwnArticulosAdapter(articulosComprables, listener)
             }
         }

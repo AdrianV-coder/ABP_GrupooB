@@ -38,9 +38,10 @@
     <!-- Fragment Me (acabar) -->
     <string name="products_uploaded">Productos Subidos</string>
 
-    <!-- FAQ (hecho)
+    <!-- FAQ (hecho) -->
     <string name="faq_question_1">¿Cómo puedo vender un artículo en la aplicación?</string>
     <string name="faq_answer_1">Para vender un artículo, solo necesitas crear una cuenta en la aplicación y luego acceder a la sección \'Vender\'. Desde ahí, podrás agregar fotos, una descripción detallada, el precio y la categoría de tu artículo. Después, solo tienes que publicar el anuncio y esperar a que los compradores se pongan en contacto contigo.</string>
+ <!--
     <string name="faq_question_2">¿Cómo puedo asegurarme de que el artículo que quiero comprar está en buen estado?</string>
     <string name="faq_answer_2">En la descripción del artículo, el vendedor debe incluir detalles sobre el estado del producto, y puedes solicitar más fotos o información adicional antes de hacer la compra. Además, te recomendamos leer las opiniones de otros compradores sobre el vendedor para tener más confianza en tu compra.</string>
     <string name="faq_question_3">¿Qué métodos de pago son aceptados?</string>

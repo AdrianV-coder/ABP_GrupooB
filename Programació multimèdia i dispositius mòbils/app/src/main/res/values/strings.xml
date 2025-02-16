@@ -38,9 +38,10 @@
     <!-- Fragment Me (acabar) -->
     <string name="products_uploaded">Products Uploaded</string>
 
-    <!-- FAQ (hecho)
+    <!-- FAQ (hecho) -->
     <string name="faq_question_1">How can I sell an item in the app?</string>
     <string name="faq_answer_1">To sell an item, simply create an account in the app, then go to the \'Sell\' section. From there, you can upload photos, write a detailed description, set a price, and select a category for your item. After that, just publish the listing and wait for buyers to contact you.</string>
+    <!--
     <string name="faq_question_2">How can I ensure that the item I want to buy is in good condition?</string>
     <string name="faq_answer_2">In the item description, the seller should include details about the product\'s condition, and you can request more photos or additional information before making the purchase. Additionally, we recommend reading reviews from other buyers about the seller to have more confidence in your purchase.</string>
     <string name="faq_question_3">What payment methods are accepted?</string>
@@ -61,6 +62,6 @@
         <item name="espanyol">es</item>
         <item name="ingles">en</item>
     </string-array>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

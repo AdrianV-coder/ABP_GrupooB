@@ -2,6 +2,7 @@ package com.example.app_grupob.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,9 @@ class UserSettingsFragment : Fragment() {
                 binding.etNombre.setText(usuario.nombre)
                 binding.etApellidos.setText(usuario.apellidos)
                 binding.etContrasena.setText(usuario.contrasena)
+
+                Log.e("AAAA", "Latitud: ${usuario.latitud.toString()}")
+                Log.e("AAAA", "Longitud: ${usuario.longitud.toString()}")
             }
         }
 

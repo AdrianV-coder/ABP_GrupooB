@@ -44,8 +44,8 @@
                 android:id="@+id/textCard1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pregunta 1"
-                android:textSize="18sp"
+                android:text="@string/faq_question_1"
+                android:textSize="19sp"
                 android:textStyle="bold"/>
 
         </LinearLayout>
@@ -67,7 +67,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Respuesta 1" />
+            android:textSize="17sp"
+            android:text="@string/faq_answer_1" />
 
     </LinearLayout>
 

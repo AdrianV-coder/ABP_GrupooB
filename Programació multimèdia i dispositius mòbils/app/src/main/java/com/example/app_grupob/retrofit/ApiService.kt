@@ -3,12 +3,17 @@ package com.example.app_grupob.retrofit
 import com.example.app_grupob.pojos.Articulo
 import com.example.app_grupob.pojos.ArticuloRequest
 import com.example.app_grupob.pojos.Usuario
+import com.example.app_grupob.pojos.Valoracion
+import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -57,9 +62,21 @@ interface ApiService {
         @Path("id") id:String
     ): Response<Unit>
 
+    @Multipart
+    @POST("uploads/imagen/{articuloId}")
+    fun subirImagen(
+        @Path("articuloId") articuloId: Int,
+        @Part file: MultipartBody.Part
+    ): Call<Map<String, String>>
+
 
     @GET("valoraciones/{id}")
     suspend fun getValoraciones(
         @Path("id") id:String
-    ):List<Int>
+    ): List<Int>
+
+    @POST("valoraciones")
+    suspend fun insertarValoracion(
+        @Body valoracion: Valoracion
+    ): Response<Unit>
 }

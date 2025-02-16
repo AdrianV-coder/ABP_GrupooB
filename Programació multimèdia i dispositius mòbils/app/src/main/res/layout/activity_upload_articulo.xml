@@ -61,12 +61,34 @@
         android:inputType="numberDecimal"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Botón para enviar el formulario -->
     <Button
-        android:id="@+id/btnEnviar"
+        android:id="@+id/btnSubirImagen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subir Imagen"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subir Artículo"
-        android:layout_gravity="center"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <!-- Botón para enviar el formulario -->
+        <Button
+            android:id="@+id/btnEnviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Subir Artículo"/>
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Cancelar"/>
+
+    </LinearLayout>
 
 </LinearLayout>
