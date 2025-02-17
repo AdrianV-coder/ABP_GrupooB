@@ -16,6 +16,7 @@ import com.example.app_grupob.adapters.ArticulosAdapter
 import com.example.app_grupob.databinding.FragmentHomeBinding
 import com.example.app_grupob.listeners.OnClickArticuloListener
 import com.example.app_grupob.pojos.Articulo
+import com.example.app_grupob.pojos.Categoria
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
@@ -82,7 +83,7 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
             override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val categoriaSeleccionada = parentView?.getItemAtPosition(position) as String
 
-                Toast.makeText(requireContext(), "Seleccionaste: $categoriaSeleccionada", Toast.LENGTH_SHORT).show()
+                filtrarArticulosCategoria(categoriaSeleccionada, listener)
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -124,32 +125,32 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
                     Toast.makeText(context, "No se han encontrado artículos relacionados a '${busqueda}'.", Toast.LENGTH_LONG).show()
                 }
             }
-
         }
     }
 
-    fun filtrarArticulosCategoria(busqueda:String, listener: OnClickArticuloListener) {
-        CoroutineScope(Dispatchers.IO).launch {
-            var articulos = RetrofitInstance.api.getArticulos()
-            var articulosComprables: MutableList<Articulo> = mutableListOf()
-            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
+    fun filtrarArticulosCategoria(nombreCategoria:String, listener: OnClickArticuloListener) {
+        if (!nombreCategoria.equals("Todas las Categorias")) {
+            CoroutineScope(Dispatchers.IO).launch {
+                var articulos = RetrofitInstance.api.getArticulos()
+                var articulosComprables: MutableList<Articulo> = mutableListOf()
+                val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
 
-            for (articulo:Articulo in articulos) {
-                if (!articulo.usuario.id.equals(usuario.get(0).id) && articulo.titulo.uppercase().startsWith(busqueda.uppercase())) {
-                    articulosComprables.add(articulo)
+                for (articulo: Articulo in articulos) {
+                    val categoriaNombre = articulo.categoria?.nombre ?: "Sin categoría"
+                    Log.e("CATEGORIA", "categoria articulo: $categoriaNombre")
+
+                    if (articulo.categoria != null && !articulo.usuario.id.equals(usuario.get(0).id) && categoriaNombre.trim() == nombreCategoria.trim()) {
+                        Log.e("CATEGORIA", "articulo final: ${articulo.titulo}")
+                        articulosComprables.add(articulo)
+                    }
                 }
-            }
 
-            if (articulosComprables.size > 0) {
                 withContext(Dispatchers.Main) {
                     binding.rvArticulosHome.adapter = ArticulosAdapter(articulosComprables, listener)
                 }
-            } else {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "No se han encontrado artículos relacionados a '${busqueda}'.", Toast.LENGTH_LONG).show()
-                }
             }
-
+        } else {
+            llenarRecycler(this)
         }
     }
 
