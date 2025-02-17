@@ -1,6 +1,7 @@
 package com.example.app_grupob.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ import kotlinx.coroutines.withContext
 class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
     private lateinit var binding: FragmentDisplayArticuloBinding
     private var articulo = articuloPulsado
+    private var favorito = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,9 +38,12 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
     ): View? {
         binding = FragmentDisplayArticuloBinding.inflate(inflater, container, false)
 
+        comprobarFavorito()
+
         binding.cardViewUsuario.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, ViewUsuarioFragment(articulo.usuario))
+                .addToBackStack(null)
                 .commit()
         }
 
@@ -82,7 +87,7 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
         }
 
         binding.btnFavoritos.setOnClickListener {
-            //ponerArticuloFavorito()
+            ponerArticuloFavorito()
         }
 
         binding.btnChat.setOnClickListener {
@@ -98,6 +103,22 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun comprobarFavorito() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            val usuarioActual = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
+            val isFavorito = RetrofitInstance.api.isFavorito(usuarioActual.id, articulo.id)
+            withContext(Dispatchers.Main) {
+                favorito = isFavorito
+                if (favorito) {
+                    binding.btnFavoritos.setIconResource(R.drawable.ic_favorite_full_red)
+                } else {
+                    binding.btnFavoritos.setIconResource(R.drawable.ic_favorite_empty)
+                }
+            }
+        }
     }
 
     fun comprarArticulo(articulo: Articulo) {
@@ -131,8 +152,6 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
                 val estrellas = ratingBar.rating
                 val descripcion = edtDescripcion.text.toString()
 
-
-
                 CoroutineScope(Dispatchers.IO).launch {
                     val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
                     val usuarioActual = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
@@ -150,7 +169,18 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
         val valoracion = Valoracion(descripcion, estrellas, usuarioQueValora, usuarioValorado)
 
         CoroutineScope(Dispatchers.IO).launch {
-            RetrofitInstance.api.insertarValoracion(valoracion)
+            try {
+                val response = RetrofitInstance.api.insertarValoracion(valoracion)
+                if (response.isSuccessful) {
+                    // Éxito, puedes notificar al usuario que la valoración fue enviada.
+                } else {
+                    // Maneja el error, tal vez mostrando un mensaje de error al usuario.
+                    Log.e("Valoración Error", "Error al enviar la valoración: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                // Manejo de errores si ocurre una excepción en la llamada API
+                Log.e("Valoración Error", "Error al enviar la valoración: ${e.message}")
+            }
         }
     }
 
@@ -164,15 +194,27 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
             .commit()
     }
 
-    /*
-    fun ponerArticuloFavorito() {
-        if (articulo es favorito) {
-            binding.btnFavoritos.icon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_favorite_empty) }
-            Quitar articulo de favoritos
-        } else {
-            binding.btnFavoritos.icon = context?.let { ContextCompat.getDrawable(it, R.drawable.ic_favorite_full_red) }
-            Añadir articulo a favoritos
+    private fun ponerArticuloFavorito() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            val usuarioActual = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
+            if (favorito) {
+                // Eliminar de favoritos
+                RetrofitInstance.api.eliminarFavorito(usuarioActual.id, articulo.id)
+                withContext(Dispatchers.Main) {
+                    // Actualizar UI
+                    binding.btnFavoritos.setIconResource(R.drawable.ic_favorite_empty)
+                }
+                favorito = false
+            } else {
+                // Añadir a favoritos
+                RetrofitInstance.api.insertarFavorito(usuarioActual.id, articulo.id)
+                withContext(Dispatchers.Main) {
+                    // Actualizar UI
+                    binding.btnFavoritos.setIconResource(R.drawable.ic_favorite_full_red)
+                }
+                favorito = true
+            }
         }
     }
-    */
 }

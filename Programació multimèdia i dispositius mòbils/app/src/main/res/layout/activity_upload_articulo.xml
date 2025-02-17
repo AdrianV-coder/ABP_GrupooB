@@ -44,6 +44,21 @@
         android:maxLines="5"
         android:layout_marginBottom="16dp"/>
 
+    <!-- Categoria del Artículo -->
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categoria del Artículo"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerCategorias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+
     <!-- Precio del Artículo -->
     <TextView
         android:id="@+id/tvPrecio"

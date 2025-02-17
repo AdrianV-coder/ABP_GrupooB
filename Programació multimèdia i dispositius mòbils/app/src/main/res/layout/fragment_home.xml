@@ -6,15 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
 
+    <ImageView
+        android:id="@+id/imgLogoHome"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/searchBarArticulos"
+        app:layout_constraintBottom_toBottomOf="@+id/searchBarArticulos"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/compact_logo" />
+
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchBarArticulos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgLogoHome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/rvArticulosHome"
         android:iconifiedByDefault="false"
         android:searchHintIcon="@null"
         android:queryHint="Buscar..."
@@ -23,12 +32,31 @@
         android:searchIcon="@drawable/ic_search"
         android:background="@drawable/search_bar" />
 
+    <TextView
+        android:id="@+id/tvCategoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/searchBarArticulos"
+        app:layout_constraintStart_toStartOf="@+id/imgLogoHome"
+        android:text="Categoria:"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerCategorias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tvCategoria"
+        app:layout_constraintStart_toEndOf="@+id/tvCategoria"
+        android:layout_marginStart="4dp" />
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvArticulosHome"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchBarArticulos"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvCategoria"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_articulo"/>
 

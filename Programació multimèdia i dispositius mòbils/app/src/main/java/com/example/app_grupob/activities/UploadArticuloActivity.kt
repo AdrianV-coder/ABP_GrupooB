@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.app_grupob.R
 import com.example.app_grupob.databinding.ActivityUploadArticuloBinding
 import com.example.app_grupob.pojos.ArticuloRequest
+import com.example.app_grupob.pojos.Categoria
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +33,7 @@ import retrofit2.Response
 
 class UploadArticuloActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadArticuloBinding
-    private var selectedImageUri: Uri? = null  // Variable para almacenar la imagen seleccionada
+    private var selectedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +41,23 @@ class UploadArticuloActivity : AppCompatActivity() {
         binding = ActivityUploadArticuloBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Botón para seleccionar imagen
+        CoroutineScope(Dispatchers.IO).launch {
+            val listaCategorias = RetrofitInstance.api.getCategorias()
+            var listaNombreCategorias:MutableList<String> = mutableListOf()
+            for (categoria in listaCategorias) {
+                listaNombreCategorias.add(categoria.nombre)
+            }
+
+            withContext(Dispatchers.Main) {
+                val adapter = ArrayAdapter(this@UploadArticuloActivity, android.R.layout.simple_spinner_item, listaNombreCategorias)
+                binding.spinnerCategorias.adapter = adapter
+            }
+        }
+
         binding.btnSubirImagen.setOnClickListener {
             seleccionarImagen()
         }
 
-        // Botón para subir el artículo y la imagen
         binding.btnEnviar.setOnClickListener {
             comprobarFormulario { articuloId ->
                 if (articuloId > 0) {
@@ -98,7 +111,9 @@ class UploadArticuloActivity : AppCompatActivity() {
             }
 
             val tempFile = File(cacheDir, "upload.jpg")
-            tempFile.outputStream().use { output -> inputStream.copyTo(output) }
+            tempFile.outputStream().use {
+                output -> inputStream.copyTo(output)
+            }
 
             val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), tempFile)
             val body = MultipartBody.Part.createFormData("file", tempFile.name, requestFile)
@@ -131,17 +146,31 @@ class UploadArticuloActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val fechaCreacion = sdf.format(calendar.time)
             val precio = binding.etPrecio.text.toString().toDouble()
+            val nombreCategoria = binding.spinnerCategorias.selectedItem.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
                 try {
+                    val categoriasDisponibles = RetrofitInstance.api.getCategorias()
+                    var categoria: Categoria? = null
+                    for (cat in categoriasDisponibles) {
+                        if (cat.nombre.equals(nombreCategoria)) {
+                            categoria = cat
+                            break
+                        }
+                    }
                     val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
                     val usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
-                    val articulo = ArticuloRequest(titulo, descripcion, fechaCreacion, precio, usuario)
 
-                    RetrofitInstance.api.insertarArticulo(articulo)
+                    if (categoria == null) {
+                        Log.e("UploadArticulo", "Categoría no encontrada")
+                    } else {
+                        val articulo = ArticuloRequest(titulo, descripcion, fechaCreacion, precio, usuario, categoria)
 
-                    buscarArticulo { articuloId ->
-                        callback(articuloId) // Retorna el ID del artículo
+                        RetrofitInstance.api.insertarArticulo(articulo)
+
+                        buscarArticulo { articuloId ->
+                            callback(articuloId) // Retorna el ID del artículo
+                        }
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {

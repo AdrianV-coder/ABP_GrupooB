@@ -38,7 +38,7 @@ class OwnArticulosAdapter(private val articulos:List<Articulo>, private val list
         with(holder) {
             binding.tvTituloArticulo.text = articulo.titulo
             binding.tvPrecioArticulo.text = String.format(articulo.precio.toString() + "€")
-            Picasso.get().load("http://4.211.191.132/App_Api/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
+            Picasso.get().load("http://4.211.191.132:8080/App_Api/uploads/" + articulo.id.toString()).into(binding.imgArticulo)
 
             binding.btnEliminarArticulo.setOnClickListener {
                 listener.eliminarArticulo(articulo)

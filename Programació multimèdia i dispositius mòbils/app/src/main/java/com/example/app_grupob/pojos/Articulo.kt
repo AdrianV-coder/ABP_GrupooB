@@ -14,6 +14,6 @@ data class ArticuloRequest(
     val descripcion:String,
     val fechaCreacion:String,
     val precio:Double,
-    val usuario:Usuario
-    //val foto:Foto
+    val usuario:Usuario,
+    val categoria: Categoria
 )

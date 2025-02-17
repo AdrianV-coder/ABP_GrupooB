@@ -32,6 +32,35 @@ class ProductsFragment : Fragment(), OnDeleteArticuloListener {
     ): View? {
         binding = FragmentProductsBinding.inflate(inflater, container, false)
 
+        cargarArticulos()
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarArticulos()
+    }
+
+    override fun eliminarArticulo(articulo: Articulo) {
+        val dialog = context?.let {
+            AlertDialog.Builder(it)
+                .setTitle("Eliminar artículo")
+                .setMessage("¿Estás seguro de eliminar el artículo?")
+                .setPositiveButton("Eliminar") { _, _ ->
+                    eliminarArticuloDeLaBaseDeDatos(articulo)
+                    Toast.makeText(it, "Artículo eliminado", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("Cancelar") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                }
+                .create()
+        }
+
+        dialog?.show()
+    }
+
+    fun cargarArticulos() {
         val recyclerViewArticulos = binding.rvArticulosPropios
         recyclerViewArticulos.layoutManager = GridLayoutManager(context, 2)
 
@@ -59,26 +88,6 @@ class ProductsFragment : Fragment(), OnDeleteArticuloListener {
                 recyclerViewArticulos.adapter = OwnArticulosAdapter(articulosComprables, listener)
             }
         }
-
-        return binding.root
-    }
-
-    override fun eliminarArticulo(articulo: Articulo) {
-        val dialog = context?.let {
-            AlertDialog.Builder(it)
-                .setTitle("Eliminar artículo")
-                .setMessage("¿Estás seguro de eliminar el artículo?")
-                .setPositiveButton("Eliminar") { _, _ ->
-                    eliminarArticuloDeLaBaseDeDatos(articulo)
-                    Toast.makeText(it, "Artículo eliminado", Toast.LENGTH_SHORT).show()
-                }
-                .setNegativeButton("Cancelar") { dialogInterface, _ ->
-                    dialogInterface.dismiss()
-                }
-                .create()
-        }
-
-        dialog?.show()
     }
 
     fun eliminarArticuloDeLaBaseDeDatos(articulo: Articulo) {

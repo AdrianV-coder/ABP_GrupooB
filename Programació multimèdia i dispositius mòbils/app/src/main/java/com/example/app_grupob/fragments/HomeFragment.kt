@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -45,7 +47,7 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (query.isNotBlank()) {
-                    filtrarArticulos(query, listener)
+                    filtrarArticulosBusqueda(query, listener)
                 } else {
                     llenarRecycler(listener)
                 }
@@ -62,6 +64,32 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
             false
         }
 
+        CoroutineScope(Dispatchers.IO).launch {
+            val listaCategorias = RetrofitInstance.api.getCategorias()
+            var listaNombreCategorias:MutableList<String> = mutableListOf()
+            listaNombreCategorias.add("Todas las Categorias")
+            for (categoria in listaCategorias) {
+                listaNombreCategorias.add(categoria.nombre)
+            }
+
+            withContext(Dispatchers.Main) {
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listaNombreCategorias)
+                binding.spinnerCategorias.adapter = adapter
+            }
+        }
+
+        binding.spinnerCategorias.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val categoriaSeleccionada = parentView?.getItemAtPosition(position) as String
+
+                Toast.makeText(requireContext(), "Seleccionaste: $categoriaSeleccionada", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+
+            }
+        }
+
         return binding.root
     }
 
@@ -71,11 +99,36 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
         if (searchView.query.isNullOrBlank()) {
             llenarRecycler(listener)
         } else {
-            filtrarArticulos(searchView.query.toString(), listener)
+            filtrarArticulosBusqueda(searchView.query.toString(), listener)
         }
     }
 
-    fun filtrarArticulos(busqueda:String, listener: OnClickArticuloListener) {
+    fun filtrarArticulosBusqueda(busqueda:String, listener: OnClickArticuloListener) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var articulos = RetrofitInstance.api.getArticulos()
+            var articulosComprables: MutableList<Articulo> = mutableListOf()
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
+
+            for (articulo:Articulo in articulos) {
+                if (!articulo.usuario.id.equals(usuario.get(0).id) && articulo.titulo.uppercase().startsWith(busqueda.uppercase())) {
+                    articulosComprables.add(articulo)
+                }
+            }
+
+            if (articulosComprables.size > 0) {
+                withContext(Dispatchers.Main) {
+                    binding.rvArticulosHome.adapter = ArticulosAdapter(articulosComprables, listener)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "No se han encontrado artículos relacionados a '${busqueda}'.", Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+    }
+
+    fun filtrarArticulosCategoria(busqueda:String, listener: OnClickArticuloListener) {
         CoroutineScope(Dispatchers.IO).launch {
             var articulos = RetrofitInstance.api.getArticulos()
             var articulosComprables: MutableList<Articulo> = mutableListOf()

@@ -2,6 +2,7 @@ package com.example.app_grupob.retrofit
 
 import com.example.app_grupob.pojos.Articulo
 import com.example.app_grupob.pojos.ArticuloRequest
+import com.example.app_grupob.pojos.Categoria
 import com.example.app_grupob.pojos.Usuario
 import com.example.app_grupob.pojos.Valoracion
 import okhttp3.MultipartBody
@@ -79,4 +80,38 @@ interface ApiService {
     suspend fun insertarValoracion(
         @Body valoracion: Valoracion
     ): Response<Unit>
+
+
+    @GET("usuarios/{id}/favoritos/{articuloId}")
+    suspend fun isFavorito(
+        @Path("id") id:Int,
+        @Path("articuloId") articuloId:Int
+    ): Boolean
+
+    @GET("usuarios/{id}/favoritos")
+    suspend fun getFavoritos(
+        @Path("id") id:Int
+    ): List<Articulo>
+
+    @DELETE("usuarios/{id}/favoritos/{articuloId}")
+    suspend fun eliminarFavorito(
+        @Path("id") id:Int,
+        @Path("articuloId") articuloId:Int
+    ): Response<Unit>
+
+    @POST("usuarios/{id}/favoritos/{articuloId}")
+    suspend fun insertarFavorito(
+        @Path("id") id:Int,
+        @Path("articuloId") articuloId:Int
+    ): Response<Unit>
+
+
+    @GET("categorias")
+    suspend fun getCategorias(
+    ): List<Categoria>
+
+    @GET("categorias/{idCategoria}")
+    suspend fun getArticulosCategoria(
+        @Path("idCategoria") id:Int
+    ): List<Articulo>
 }
