@@ -3,6 +3,7 @@
 
 #include "usuario.h"
 #include "dtablausuarios.h"
+#include "conexion.h"
 
 #include <QMainWindow>
 #include <QAction>
@@ -27,9 +28,13 @@ class VentanaPrincipal : public QMainWindow {
 		void crearActions();
 		void crearMenus();
 		void inicializarUsuarios();
+		void crearFotoYTexto();
 		
 	public slots:
 		void slotTablaUsuarios();
+	
+	signals:
+		
 };
 
 #endif

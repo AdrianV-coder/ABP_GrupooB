@@ -4,9 +4,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-Usuario::Usuario(QString nombre, QString apellidos): nombre(nombre), apellidos(apellidos) {
-	esImagen = false;
+Usuario::Usuario(int id, QString nombre, QString apellidos, QString correo, QString contrasena, double latitud, double longitud): id(id), nombre(nombre), apellidos(apellidos), correo(correo), contrasena(contrasena), latitud(latitud), longitud(longitud) {
 }
 
-Usuario::Usuario(): Usuario("", "") {
+Usuario::Usuario() {
 }

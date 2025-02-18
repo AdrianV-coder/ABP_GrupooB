@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dtablausuarios.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.8
+** Created by: Qt User Interface Compiler version 5.15.13
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -25,7 +25,7 @@ public:
     QPushButton *btnModificar;
     QPushButton *btnInsertar;
     QTableView *vista;
-    QPushButton *pushButton;
+    QPushButton *btnInicio;
 
     void setupUi(QDialog *DTablaUsuarios)
     {
@@ -44,9 +44,9 @@ public:
         vista = new QTableView(DTablaUsuarios);
         vista->setObjectName(QString::fromUtf8("vista"));
         vista->setGeometry(QRect(20, 20, 1131, 641));
-        pushButton = new QPushButton(DTablaUsuarios);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(20, 690, 141, 25));
+        btnInicio = new QPushButton(DTablaUsuarios);
+        btnInicio->setObjectName(QString::fromUtf8("btnInicio"));
+        btnInicio->setGeometry(QRect(20, 690, 141, 25));
 
         retranslateUi(DTablaUsuarios);
 
@@ -59,7 +59,7 @@ public:
         btnEliminar->setText(QCoreApplication::translate("DTablaUsuarios", "Eliminar Usuario", nullptr));
         btnModificar->setText(QCoreApplication::translate("DTablaUsuarios", "Modificar Usuario", nullptr));
         btnInsertar->setText(QCoreApplication::translate("DTablaUsuarios", "Insertar Usuario", nullptr));
-        pushButton->setText(QCoreApplication::translate("DTablaUsuarios", "<-- Volver al inicio", nullptr));
+        btnInicio->setText(QCoreApplication::translate("DTablaUsuarios", "<-- Volver al inicio", nullptr));
     } // retranslateUi
 
 };

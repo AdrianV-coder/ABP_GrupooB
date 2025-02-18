@@ -7,13 +7,14 @@
 class Usuario {
 	
 	public:
-		Usuario(QString nombre, QString apellidos);
+		Usuario(int, QString, QString, QString, QString, double, double);
+		Usuario(int);
 		Usuario();
 		
-		int id = 0;
+		int id;
 		QString nombre, apellidos, correo, contrasena;
 		QImage imagen;
-		//Ubicacion *ubicacion;
+		double latitud, longitud;
 		//Articulo *articulosPublicados, *articulosComprados;
 		bool esImagen;
 		
