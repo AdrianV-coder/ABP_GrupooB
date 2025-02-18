@@ -57,7 +57,7 @@ public class FotoController {
 
             // Guarda la URL en la base de datos
             Foto foto = new Foto();
-            String fileUrl = "http://10.249.99.206:8080/uploads/" + fileName;
+            String fileUrl = "http://10.0.0.4:8080/uploads/" + fileName;
             foto.setUrl(fileUrl);
             foto.setArticulo(articulo);
             fotoRepository.save(foto);

@@ -30,9 +30,8 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
     @Override
     public UsuarioResponseDto listarPorId(Integer id) {
-        Optional<Usuario> articulo = repository.findById(id);
-
-        return articulo.map(value -> modelMapper.map(value, UsuarioResponseDto.class))
+        Optional<Usuario> usuario = repository.findById(id);
+        return usuario.map(value -> modelMapper.map(value, UsuarioResponseDto.class))
                 .orElse(null);
     }
 

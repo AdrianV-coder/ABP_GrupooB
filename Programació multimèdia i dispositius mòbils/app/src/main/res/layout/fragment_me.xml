@@ -90,7 +90,7 @@
                         android:id="@+id/imgStar_5"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_star_grey"/>
+                        android:src="@drawable/ic_star_yellow"/>
 
                     <TextView
                         android:id="@+id/txtValoracionUsuario"

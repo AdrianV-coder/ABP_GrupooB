@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Valora al vendedor:"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_grey"
+        android:layout_marginBottom="15dp"/>
+
+    <!-- Barra de estrellas para valoración -->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:rating="3"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Campo de texto para la descripción -->
+    <EditText
+        android:id="@+id/edtDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Escribe tu comentario aquí..."
+        android:inputType="textMultiLine"
+        android:minHeight="100dp"
+        android:gravity="top"
+        android:padding="10dp"/>
+
+</LinearLayout>
