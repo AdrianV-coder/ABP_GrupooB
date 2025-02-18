@@ -17,6 +17,8 @@ import com.example.app_grupob.activities.MainActivity
 import com.example.app_grupob.activities.WelcomeActivity
 import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
 import com.example.app_grupob.databinding.FragmentMeBinding
+import com.example.app_grupob.pojos.Usuario
+import com.example.app_grupob.pojos.UsuarioEntity
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
@@ -117,6 +119,14 @@ class MeFragment: Fragment() {
             val intent = Intent(context, WelcomeActivity::class.java)
             startActivity(intent)
         }
+
+        /*
+        if (esPremium()) {
+            binding.imgOdoo.visibility = View.VISIBLE
+        } else {
+            binding.imgOdoo.visibility = View.GONE
+        }
+         */
 
         return binding.root
     }

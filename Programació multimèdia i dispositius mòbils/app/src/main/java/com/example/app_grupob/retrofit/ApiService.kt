@@ -114,4 +114,10 @@ interface ApiService {
     suspend fun getArticulosCategoria(
         @Path("idCategoria") id:Int
     ): List<Articulo>
+
+
+    @POST("odoo/premium/{id}")
+    suspend fun insertarUsuarioOdoo(
+        @Path("id") id:Int
+    ): Response<Unit>
 }

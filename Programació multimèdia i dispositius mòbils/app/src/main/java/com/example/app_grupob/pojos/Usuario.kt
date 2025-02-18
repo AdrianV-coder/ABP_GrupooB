@@ -10,7 +10,8 @@ data class Usuario(
     val correo:String,
     val contrasena:String,
     val longitud:Double,
-    val latitud:Double
+    val latitud:Double,
+    val premium:Boolean
 )
 
 @Entity(tableName = "usuarios")
@@ -21,5 +22,6 @@ data class UsuarioEntity(
     val correo:String,
     val contrasena:String,
     val longitud:Double,
-    val latitud:Double
+    val latitud:Double,
+    val premium:Boolean
 )
