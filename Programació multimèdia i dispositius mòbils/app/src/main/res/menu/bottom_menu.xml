@@ -13,8 +13,8 @@
 
     <item
         android:id="@+id/item_upload"
-        android:title="@string/item_upload"
-        android:icon="@drawable/ic_upload" />
+        android:title=""
+        android:enabled="false" />
 
     <item
         android:id="@+id/item_mailbox"
@@ -27,3 +27,4 @@
         android:icon="@drawable/ic_me" />
 
 </menu>
+

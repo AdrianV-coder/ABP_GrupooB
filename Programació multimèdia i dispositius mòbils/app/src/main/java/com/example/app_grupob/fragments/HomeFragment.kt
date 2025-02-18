@@ -129,18 +129,16 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
     }
 
     fun filtrarArticulosCategoria(nombreCategoria:String, listener: OnClickArticuloListener) {
-        if (!nombreCategoria.equals("Todas las Categorias")) {
+        if (binding.spinnerCategorias.selectedItemPosition != 0) {
             CoroutineScope(Dispatchers.IO).launch {
                 var articulos = RetrofitInstance.api.getArticulos()
                 var articulosComprables: MutableList<Articulo> = mutableListOf()
                 val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
 
                 for (articulo: Articulo in articulos) {
-                    val categoriaNombre = articulo.categoria?.nombre ?: "Sin categoría"
-                    Log.e("CATEGORIA", "categoria articulo: $categoriaNombre")
+                    val categoriaNombre = articulo.categoria.nombre
 
                     if (articulo.categoria != null && !articulo.usuario.id.equals(usuario.get(0).id) && categoriaNombre.trim() == nombreCategoria.trim()) {
-                        Log.e("CATEGORIA", "articulo final: ${articulo.titulo}")
                         articulosComprables.add(articulo)
                     }
                 }

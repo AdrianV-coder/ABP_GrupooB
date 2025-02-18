@@ -141,7 +141,7 @@ class WelcomeActivity : AppCompatActivity() {
                         val existe = RetrofitInstance.api.getUsuarioExiste(correo)
 
                         if (!existe) {
-                            val usuarioCreado = Usuario(-1,nombre, apellidos, correo, contrasena, longitud, latitud, false)
+                            val usuarioCreado = Usuario(-1, nombre, apellidos, correo, contrasena, longitud, latitud, false)
 
                             RetrofitInstance.api.insertarUsuario(usuarioCreado)
 
