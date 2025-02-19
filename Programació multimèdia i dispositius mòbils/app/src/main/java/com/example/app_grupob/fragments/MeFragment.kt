@@ -120,14 +120,21 @@ class MeFragment: Fragment() {
             startActivity(intent)
         }
 
-        /*
-        if (esPremium()) {
-            binding.imgOdoo.visibility = View.VISIBLE
-        } else {
-            binding.imgOdoo.visibility = View.GONE
-        }
-         */
+        esPremium()
 
         return binding.root
+    }
+
+    fun esPremium() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            withContext(Dispatchers.Main) {
+                if (usuarioActual.premium) {
+                    binding.imgOdoo.visibility = View.VISIBLE
+                } else {
+                    binding.imgOdoo.visibility = View.GONE
+                }
+            }
+        }
     }
 }

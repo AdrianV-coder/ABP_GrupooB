@@ -47,11 +47,8 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                if (query.isNotBlank()) {
-                    filtrarArticulosBusqueda(query, listener)
-                } else {
-                    llenarRecycler(listener)
-                }
+                filtrarArticulos(query, binding.spinnerCategorias.selectedItemPosition, listener)
+
                 searchView.clearFocus()
                 return true
             }
@@ -61,7 +58,7 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
             }
         })
         searchView.setOnCloseListener {
-            llenarRecycler(listener)
+            filtrarArticulos(searchView.query.toString(), binding.spinnerCategorias.selectedItemPosition, listener)
             false
         }
 
@@ -81,9 +78,7 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
 
         binding.spinnerCategorias.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val categoriaSeleccionada = parentView?.getItemAtPosition(position) as String
-
-                filtrarArticulosCategoria(categoriaSeleccionada, listener)
+                filtrarArticulos(binding.searchBarArticulos.query.toString(), position, listener)
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -98,61 +93,57 @@ class HomeFragment : Fragment(), OnClickArticuloListener {
         super.onResume()
 
         if (searchView.query.isNullOrBlank()) {
-            llenarRecycler(listener)
+            llenarRecyclerTodos(listener)
         } else {
-            filtrarArticulosBusqueda(searchView.query.toString(), listener)
+            filtrarArticulos(searchView.query.toString(), binding.spinnerCategorias.selectedItemPosition, listener)
         }
     }
 
-    fun filtrarArticulosBusqueda(busqueda:String, listener: OnClickArticuloListener) {
+    fun filtrarArticulos(busqueda:String, numCategoria:Int, listener: OnClickArticuloListener) {
         CoroutineScope(Dispatchers.IO).launch {
             var articulos = RetrofitInstance.api.getArticulos()
-            var articulosComprables: MutableList<Articulo> = mutableListOf()
+            var articulosComprablesBusqueda: MutableList<Articulo> = mutableListOf()
             val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
 
             for (articulo:Articulo in articulos) {
                 if (!articulo.usuario.id.equals(usuario.get(0).id) && articulo.titulo.uppercase().startsWith(busqueda.uppercase())) {
-                    articulosComprables.add(articulo)
+                    articulosComprablesBusqueda.add(articulo)
                 }
             }
 
-            if (articulosComprables.size > 0) {
-                withContext(Dispatchers.Main) {
-                    binding.rvArticulosHome.adapter = ArticulosAdapter(articulosComprables, listener)
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(context, "No se han encontrado artículos relacionados a '${busqueda}'.", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
-
-    fun filtrarArticulosCategoria(nombreCategoria:String, listener: OnClickArticuloListener) {
-        if (binding.spinnerCategorias.selectedItemPosition != 0) {
-            CoroutineScope(Dispatchers.IO).launch {
-                var articulos = RetrofitInstance.api.getArticulos()
+            if (numCategoria != 0) {
+                val categoriaSeleccionada = RetrofitInstance.api.getCategorias()[numCategoria-1]
                 var articulosComprables: MutableList<Articulo> = mutableListOf()
-                val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
-
-                for (articulo: Articulo in articulos) {
-                    val categoriaNombre = articulo.categoria.nombre
-
-                    if (articulo.categoria != null && !articulo.usuario.id.equals(usuario.get(0).id) && categoriaNombre.trim() == nombreCategoria.trim()) {
+                for (articulo:Articulo in articulosComprablesBusqueda) {
+                    if (articulo.categoria.id == categoriaSeleccionada.id) {
                         articulosComprables.add(articulo)
                     }
                 }
 
-                withContext(Dispatchers.Main) {
-                    binding.rvArticulosHome.adapter = ArticulosAdapter(articulosComprables, listener)
-                }
+                llenarRecycler(articulosComprables, listener)
+            } else {
+                llenarRecycler(articulosComprablesBusqueda, listener)
             }
-        } else {
-            llenarRecycler(this)
         }
     }
 
-    fun llenarRecycler(listener: OnClickArticuloListener) {
+    suspend fun llenarRecycler(articulos:List<Articulo>, listener: OnClickArticuloListener) {
+        if (articulos.size > 0) {
+            withContext(Dispatchers.Main) {
+                binding.rvArticulosHome.adapter = ArticulosAdapter(articulos, listener)
+                binding.articulosNoEncontrados.visibility = View.GONE
+                binding.rvArticulosHome.visibility = View.VISIBLE
+            }
+        } else {
+            withContext(Dispatchers.Main) {
+                binding.rvArticulosHome.adapter = ArticulosAdapter(mutableListOf(), listener)
+                binding.articulosNoEncontrados.visibility = View.VISIBLE
+                binding.rvArticulosHome.visibility = View.GONE
+            }
+        }
+    }
+
+    fun llenarRecyclerTodos(listener: OnClickArticuloListener) {
         CoroutineScope(Dispatchers.IO).launch {
             var articulos = RetrofitInstance.api.getArticulos()
             var articulosComprables: MutableList<Articulo> = mutableListOf()

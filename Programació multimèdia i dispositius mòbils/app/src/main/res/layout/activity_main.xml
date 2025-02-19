@@ -12,7 +12,8 @@
         android:id="@+id/fragmentContainer"
         android:name="com.example.app_grupob.fragments.HomeFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
