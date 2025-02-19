@@ -53,7 +53,7 @@ class MeFragment: Fragment() {
             }
 
             withContext(Dispatchers.Main) {
-                binding.txtNombreUsuario.text = "${usuario.get(0).nombre} ${usuario.get(0).apellidos.substring(0, 1).toUpperCase()}."
+                binding.txtNombreUsuario.text = "${usuario.get(0).nombre} ${usuario.get(0).apellidos.substring(0, 1)}."
                 binding.txtValoracionUsuario.text = mediaValoraciones.toString().substring(0, 3)
                 binding.txtTotalValoraciones.text = "(${totalValoraciones.toString()})"
 
@@ -129,7 +129,8 @@ class MeFragment: Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
             withContext(Dispatchers.Main) {
-                if (usuarioActual.premium) {
+                val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
+                if (usuarioNuevo.premium) {
                     binding.imgOdoo.visibility = View.VISIBLE
                 } else {
                     binding.imgOdoo.visibility = View.GONE

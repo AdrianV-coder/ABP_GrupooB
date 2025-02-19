@@ -18,6 +18,8 @@ import kotlinx.coroutines.withContext
 
 class ArticulosAdapter(private val articulos:List<Articulo>, private val listener: OnClickArticuloListener) : RecyclerView.Adapter<ArticulosAdapter.ViewHolder>() {
 
+    private val articulosReversed = articulos.reversed()
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemArticuloBinding.bind(view)
     }
@@ -28,10 +30,10 @@ class ArticulosAdapter(private val articulos:List<Articulo>, private val listene
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = articulos.size
+    override fun getItemCount(): Int = articulosReversed.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var articulo:Articulo = articulos[position]
+        var articulo:Articulo = articulosReversed[position]
 
         with(holder) {
             binding.tvTituloArticulo.text = articulo.titulo

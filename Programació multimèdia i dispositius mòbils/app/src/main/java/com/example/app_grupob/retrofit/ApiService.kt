@@ -49,6 +49,11 @@ interface ApiService {
         @Body usuario: Usuario
     ): Response<Unit>
 
+    @PUT("usuarios/premium/{idUsuario}")
+    suspend fun modificarUsuarioPremium(
+        @Path("idUsuario") idUsuario:String
+    ): Response<Unit>
+
 
     @GET("articulos")
     suspend fun getArticulos():List<Articulo>
@@ -116,8 +121,9 @@ interface ApiService {
     ): List<Articulo>
 
 
-    @POST("odoo/premium/{id}")
+    @POST("odoo/create")
     suspend fun insertarUsuarioOdoo(
-        @Path("id") id:Int
+        @Query("name") name: String,
+        @Query("email") email: String
     ): Response<Unit>
 }

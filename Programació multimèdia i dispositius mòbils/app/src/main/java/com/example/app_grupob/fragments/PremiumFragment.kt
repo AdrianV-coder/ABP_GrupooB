@@ -33,11 +33,8 @@ class PremiumFragment : Fragment() {
         esPremium()
 
         binding.btnConseguirPremium.setOnClickListener {
-            cambiarPremium()
             guardarOdoo()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, PremiumFragment())
-                .commit()
+            modificarPremium()
         }
 
         return binding.root
@@ -47,7 +44,8 @@ class PremiumFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
             withContext(Dispatchers.Main) {
-                if (usuarioActual.premium) {
+                val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
+                if (usuarioNuevo.premium) {
                     binding.txtPremium.visibility = View.VISIBLE
                     binding.btnConseguirPremium.visibility = View.GONE
                 } else {
@@ -58,33 +56,26 @@ class PremiumFragment : Fragment() {
         }
     }
 
-    fun cambiarPremium() {
+    fun guardarOdoo() {
         CoroutineScope(Dispatchers.IO).launch {
-            var usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
-            eliminarUsuariosRoom()
-            val usuarioActualPremium = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
-            val usuarioEntityPremium = UsuarioEntity(usuarioActualPremium.id, usuarioActualPremium.nombre, usuarioActualPremium.apellidos, usuarioActualPremium.correo, "", usuarioActualPremium.longitud, usuarioActualPremium.latitud, true)
-            UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntityPremium)
-        }
-    }
-
-    fun eliminarUsuariosRoom() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val usuarios = UsuarioApplication.database.usuarioDao().getUsuario()
-            for (user in usuarios) {
-                UsuarioApplication.database.usuarioDao().deleteUsuario(user)
+            val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            withContext(Dispatchers.Main) {
+                val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
+                RetrofitInstance.api.insertarUsuarioOdoo(usuarioNuevo.nombre, usuarioNuevo.correo)
             }
         }
     }
 
-    fun guardarOdoo() {
+    fun modificarPremium() {
         CoroutineScope(Dispatchers.IO).launch {
             val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
-            val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
-
-            RetrofitInstance.api.insertarUsuarioOdoo(usuarioNuevo.id)
             withContext(Dispatchers.Main) {
-                Toast.makeText(context, "Eres usuario Premium", Toast.LENGTH_SHORT).show()
+                val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
+                RetrofitInstance.api.modificarUsuarioPremium(usuarioNuevo.id.toString())
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, PremiumFragment())
+                    .commit()
             }
         }
     }
