@@ -34,13 +34,13 @@ class PremiumFragment : Fragment() {
         }
 
         binding.btnFactura.setOnClickListener {
-            Toast.makeText(context, "Este botón debería de mostrar la factura, pero no funciona.", Toast.LENGTH_SHORT).show()
-            //val webView = view?.findViewById<WebView>(R.id.webViewFactura)
-            //webView?.loadUrl("http://4.211.191.132:8069/report/html/account.report_invoice/92")
+            //Toast.makeText(context, "Este botón debería de mostrar la factura, pero no funciona.", Toast.LENGTH_SHORT).show()
+            val webView = view?.findViewById<WebView>(R.id.webViewFactura)
+            webView?.loadUrl("http://4.211.191.132:8069/report/html/account.report_invoice/154")
 
-            //binding.btnConseguirPremium.visibility = View.GONE
-            //binding.llPremium.visibility = View.GONE
-            //binding.webViewFactura.visibility = View.VISIBLE
+            binding.btnConseguirPremium.visibility = View.GONE
+            binding.llPremium.visibility = View.GONE
+            binding.webViewFactura.visibility = View.VISIBLE
         }
 
         return binding.root

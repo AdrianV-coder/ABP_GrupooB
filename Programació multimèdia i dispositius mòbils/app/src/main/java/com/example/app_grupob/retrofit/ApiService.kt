@@ -122,7 +122,7 @@ interface ApiService {
     ): List<Articulo>
 
 
-    @POST("odoo/create")
+    @POST("odoo/create-partner")
     suspend fun insertarUsuarioOdoo(
         @Query("name") name: String,
         @Query("email") email: String
