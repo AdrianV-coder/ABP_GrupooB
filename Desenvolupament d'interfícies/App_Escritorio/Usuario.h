@@ -15,7 +15,6 @@ class Usuario {
 		QString nombre, apellidos, correo, contrasena;
 		QImage imagen;
 		double latitud, longitud;
-		//Articulo *articulosPublicados, *articulosComprados;
 		bool esImagen;
 		
 		void establecerImagen();

@@ -30,12 +30,16 @@ class DTablaUsuarios : public QDialog, public Ui::DTablaUsuarios {
 		DAnyadirUsuarios *dAnyadirUsuarios;
 		Conexion *conexionAPI;
 		
+		void iniciarConexion();
+		void conectarActualizaciones();
+		
 	public slots:
 		void slotEliminarUsuario();
 		void slotElegirUsuario();
 		void slotAnyadirUsuario();
 		void slotInicio();
 		void procesarDatos(QByteArray);
+		void slotActualizarTabla();
 };
 
 class ModeloTabla : public QAbstractTableModel {
@@ -53,8 +57,6 @@ class ModeloTabla : public QAbstractTableModel {
 		Qt::ItemFlags flags(const QModelIndex &index) const;
 		bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 		QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-		
-	public slots:
 };
 
 #endif 

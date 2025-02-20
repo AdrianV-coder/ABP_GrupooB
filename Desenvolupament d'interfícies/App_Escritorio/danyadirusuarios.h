@@ -15,12 +15,16 @@ class DAnyadirUsuarios : public QDialog, public Ui::DAnyadirUsuarios {
     	void mostrarFoto();
 
 	private slots:
-	    void slotAnyadirUsuario();  // Método para enviar los datos
+	    void slotAnyadirUsuario();
     	void onRespuestaRecibida(QNetworkReply* reply);
     	void slotSalir();
 
 	private:
     	QNetworkAccessManager* manager;
+    	
+    signals:
+	    void usuarioActualizado();
+    	void actualizarTablaUsaurios();
 };
 
 #endif

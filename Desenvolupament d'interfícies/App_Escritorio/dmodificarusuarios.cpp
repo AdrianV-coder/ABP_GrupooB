@@ -11,6 +11,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <QMessageBox>
 
 DModificarUsuarios::DModificarUsuarios(QWidget *parent): QDialog(parent){
 	setupUi(this);
@@ -62,8 +63,14 @@ void DModificarUsuarios::slotModificarUsuario() {
     json["latitud"] = leLatitud -> text().toDouble();
     json["longitud"] = leLongitud -> text().toDouble();
 
+	
+	/*conexionAPI -> peticionPost(json, this -> idUsuario);
+	
+	this->close();*/
+
+	
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("http://api.grupob.com/App_Api/usuarios/" + idUsuario);
+    QUrl url("http://4.211.191.132:8080/App_Api/usuarios/" + idUsuario);
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -74,24 +81,12 @@ void DModificarUsuarios::slotModificarUsuario() {
             qDebug() << "Usuario actualizado correctamente.";
         } else {
             qDebug() << "Error al actualizar usuario:" << reply->errorString();
+            
+            QMessageBox::warning(this, "Error al actualizar el usuario", "ERROR, el usuario no se ha podido modificar", QMessageBox::Ok | QMessageBox::Cancel);
         }
+        
         reply->deleteLater();
         this->close();
     });
-    
-    //connect(reply, &QNetworkReply::finished, this, &DModificarUsuarios::slotManejarRespuesta);
-
 }
-/*
-void DModificarUsuarios::slotManejarRespuesta(QNetworkReply *reply) {
-    if (reply->error() == QNetworkReply::NoError) {
-        qDebug() << "Usuario actualizado correctamente.";
-    } else {
-        qDebug() << "Error al actualizar usuario:" << reply->errorString();
-    }
-    reply->deleteLater();
-    this->close();
-}*/
-
-
 

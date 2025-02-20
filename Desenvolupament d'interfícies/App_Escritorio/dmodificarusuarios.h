@@ -3,6 +3,7 @@
 
 #include "ui_dmodificarusuarios.h"
 #include "usuario.h"
+//#include "conexion.h"
 
 #include <QDialog>
 #include <QNetworkAccessManager>
@@ -13,7 +14,8 @@ class DModificarUsuarios : public QDialog, public Ui::DModificarUsuarios {
 
 	public:
 		DModificarUsuarios(QWidget *parent = NULL);
-	
+		//Conexion *conexionAPI;
+		
 		void mostrarFoto();
 		void cargarDatosUsuario(QString idUsuario, QString nombre, QString apellidos, QString correo, QString contrasena, double latitud, double longitud);
 
@@ -24,9 +26,6 @@ class DModificarUsuarios : public QDialog, public Ui::DModificarUsuarios {
 	public slots:
 		void slotModificarUsuario();
 		void slotSalir();
-		
-	private slots:
-    	//void slotManejarRespuesta(QNetworkReply *reply);
 };
 
 #endif 
