@@ -20,12 +20,16 @@ class DEliminarUsuarios : public QDialog, public Ui::DEliminarUsuarios {
 		void mostrarFoto();
 
 	private slots:
-	    void slotEliminarUsuario();  // Método para enviar los datos
+	    void slotEliminarUsuario();
     	void onRespuestaRecibida(QNetworkReply* reply);
     	void slotSalir();
 
 	private:
     	QNetworkAccessManager* manager;
+    	
+    signals:
+	    void usuarioActualizado();
+    	void actualizarTablaUsaurios();
 };
 
 #endif 

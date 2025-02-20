@@ -6,31 +6,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.PremiumFragment">
 
-    <TextView
-        android:id="@+id/txtPremium"
+    <WebView
+        android:id="@+id/webViewFactura"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/llPremium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ya eres Premium."
-        android:textSize="24sp"
-        android:textColor="@color/dark_grey"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/premium_text"
+            android:textSize="24sp"
+            android:textColor="@color/dark_grey"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/btnFactura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/premium_button_invoice"
+            android:textSize="18sp"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnConseguirPremium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/dark_grey"
+        android:backgroundTint="@color/green"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="16sp"
         android:padding="24dp"
-        android:text="Conseguir Premium"
+        android:text="@string/premium_button_get"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

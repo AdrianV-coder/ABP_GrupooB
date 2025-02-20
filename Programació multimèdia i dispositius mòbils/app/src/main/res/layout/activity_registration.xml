@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/light_grey"
-    tools:context=".activities.UploadArticuloActivity">
+    tools:context=".activities.RegistrationActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,132 +28,117 @@
             android:padding="24dp">
 
             <TextView
-                android:id="@+id/uploadArticuloText"
+                android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_upload_article"
+                android:text="@string/text_registration"
                 android:textSize="36sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 android:textColor="@color/green"/>
 
             <EditText
-                android:id="@+id/etArticuloTitle"
+                android:id="@+id/etRegisterName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_text"
-                android:hint="@string/text_article_title"
+                android:drawableLeft="@drawable/ic_me"
+                android:drawablePadding="8dp"
+                android:hint="@string/hint_name"
                 android:textColor="@color/dark_grey"
                 android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="34dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
                 android:padding="8dp"/>
 
             <EditText
-                android:id="@+id/etArticuloDescription"
+                android:id="@+id/etRegisterSurnames"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_text"
-                android:hint="@string/text_article_description"
-                android:textColor="@color/dark_grey"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="18dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:padding="8dp"/>
-
-            <!-- cambiar color de los items del spinner -->
-            <Spinner
-                android:id="@+id/spinnerCategories"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/custom_text"
-                android:hint="@string/text_article_category"
+                android:drawableLeft="@drawable/ic_surnames"
+                android:drawablePadding="8dp"
+                android:hint="@string/hint_surnames"
                 android:textColor="@color/dark_grey"
                 android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="18dp"
                 android:padding="8dp"/>
 
             <EditText
-                android:id="@+id/etArticuloPrice"
+                android:id="@+id/etRegistarLocation"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_text"
-                android:hint="@string/text_article_price"
-                android:inputType="numberDecimal"
+                android:drawableLeft="@drawable/ic_location"
+                android:drawablePadding="8dp"
+                android:hint="@string/hint_location"
                 android:textColor="@color/dark_grey"
                 android:textColorHighlight="@color/cardview_dark_background"
                 android:layout_marginTop="18dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
                 android:padding="8dp"/>
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/etRegisterEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="18dp">
+                android:background="@drawable/custom_text"
+                android:drawableLeft="@drawable/ic_mailbox"
+                android:drawablePadding="8dp"
+                android:hint="@string/hint_email"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="18dp"
+                android:padding="8dp"/>
 
-                <TextView
-                    android:id="@+id/txtImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/text_upload_image"
-                    android:layout_marginStart="15dp"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:textColor="@color/green"
-                    android:layout_weight="1"/>
+            <EditText
+                android:id="@+id/etRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_text"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawablePadding="8dp"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="18dp"
+                android:padding="8dp"/>
 
-                <TextView
-                    android:id="@+id/txtImageUploaded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/text_image_uploaded"
-                    android:layout_marginStart="15dp"
-                    android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:visibility="gone"
-                    android:textColor="@color/green"
-                    android:layout_weight="1"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnUploadImage"
-                    android:layout_width="70dp"
-                    android:layout_height="50dp"
-                    android:backgroundTint="@color/green"
-                    android:layout_gravity="end"
-                    app:icon="@drawable/ic_upload_image"
-                    app:iconSize="32dp"
-                    app:iconGravity="textTop"
-                    app:cornerRadius="10dp"/>
-
-            </LinearLayout>
+            <EditText
+                android:id="@+id/etRegisterConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_text"
+                android:drawableLeft="@drawable/ic_lock"
+                android:drawablePadding="8dp"
+                android:hint="@string/hint_confirm_password"
+                android:inputType="textPassword"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="18dp"
+                android:padding="8dp"/>
 
             <Button
-                android:id="@+id/btnUploadArticulo"
+                android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="@string/button_upload_article"
+                android:text="@string/button_sign_up"
                 android:textSize="18sp"
                 android:layout_marginTop="26dp"
-                android:backgroundTint="@color/green"
-                app:cornerRadius="20dp"/>
-
-            <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="@string/button_cancel_article"
-                android:textSize="18sp"
-                android:backgroundTint="@color/green"
                 app:cornerRadius="20dp"/>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/txtChangeToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_change_to_login"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:padding="8dp"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

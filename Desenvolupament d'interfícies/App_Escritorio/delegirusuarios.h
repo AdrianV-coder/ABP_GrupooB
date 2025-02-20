@@ -16,11 +16,12 @@ class DElegirUsuarios : public QDialog, public Ui::DElegirUsuarios {
 		DElegirUsuarios(QWidget *parent = NULL);
 		
 		DModificarUsuarios *dModificarUsuarios;
+		
+		void actualizarTablaPrincipal();
 
 	public slots:
 		void slotSalir();
 		void slotElegirUsuario();
-
 };
 
 #endif 

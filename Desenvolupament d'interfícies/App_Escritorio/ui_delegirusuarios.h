@@ -53,7 +53,7 @@ public:
     {
         DElegirUsuarios->setWindowTitle(QCoreApplication::translate("DElegirUsuarios", "Dialog", nullptr));
         leId_Elegir->setText(QString());
-        lCorreo_Elegir->setText(QCoreApplication::translate("DElegirUsuarios", "Introduce el correo del usuario que quieras modificar:", nullptr));
+        lCorreo_Elegir->setText(QCoreApplication::translate("DElegirUsuarios", "Introduce el ID del usuario que quieras modificar:", nullptr));
         btnAceptar->setText(QCoreApplication::translate("DElegirUsuarios", "Aceptar", nullptr));
         btnCancelar->setText(QCoreApplication::translate("DElegirUsuarios", "Cancelar", nullptr));
     } // retranslateUi

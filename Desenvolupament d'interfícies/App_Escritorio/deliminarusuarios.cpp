@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <QMessageBox>
 
 DEliminarUsuarios::DEliminarUsuarios(QWidget *parent): QDialog(parent){
 	setupUi(this);
@@ -44,8 +45,9 @@ void DEliminarUsuarios::slotEliminarUsuario() {
 
     // Configurar la solicitud DELETE a la API
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    QString stringUrl = QString("http://4.211.191.132:8080/App_Api/usuarios/");
     
-    QNetworkRequest request(QUrl(QString("http://api.grupob.com/App_Api/usuarios/") + idUsuario));
+    QNetworkRequest request(QUrl(stringUrl + idUsuario));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     // Enviar la solicitud DELETE
@@ -53,12 +55,15 @@ void DEliminarUsuarios::slotEliminarUsuario() {
     connect(reply, &QNetworkReply::finished, [reply, this]() {
         if (reply->error() == QNetworkReply::NoError) {
             qDebug() << "Usuario eliminado correctamente.";
+            emit usuarioActualizado();
         } else {
             qDebug() << "Error al eliminar usuario:" << reply->errorString();
+            
+            QMessageBox::warning(this, "Error al eliminar el usuario", "El ID del usuario introducido no está en la base de datos", QMessageBox::Ok | QMessageBox::Cancel);
         }
         
         reply->deleteLater();
-        
+        emit actualizarTablaUsaurios();
         this->close();  // Cierra el diálogo después de procesar la respuesta
     });
 }

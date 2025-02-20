@@ -44,7 +44,7 @@ class FavoritesFragment : Fragment(), OnClickArticuloListener {
 
     fun cargarArticulos(listener: OnClickArticuloListener) {
         CoroutineScope(Dispatchers.IO).launch {
-            val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
             val usuarioActual = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
             var articulos = RetrofitInstance.api.getFavoritos(usuarioActual.id)
 

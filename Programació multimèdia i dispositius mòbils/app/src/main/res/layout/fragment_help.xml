@@ -11,7 +11,7 @@
         android:id="@+id/txtPreguntasFrecuentes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Preguntas Frecuentes"
+        android:text="@string/faq_title"
         android:textColor="@color/dark_grey"
         android:textStyle="bold"
         android:textSize="30sp"

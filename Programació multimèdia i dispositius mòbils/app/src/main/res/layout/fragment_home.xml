@@ -74,7 +74,7 @@
         android:id="@+id/articulosNoEncontrados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No se han encontrado artículos."
+        android:text="@string/text_articles_not_found"
         android:textStyle="bold"
         android:textColor="@color/dark_grey"
         android:textSize="25sp"

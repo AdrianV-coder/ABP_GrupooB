@@ -32,9 +32,6 @@ class VentanaPrincipal : public QMainWindow {
 		
 	public slots:
 		void slotTablaUsuarios();
-	
-	signals:
-		
 };
 
 #endif

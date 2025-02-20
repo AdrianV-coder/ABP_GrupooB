@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">ListFor</string>
 
-    <!-- MainActivity (borrar)-->
-    <string name="hello_world">Hello World!</string>
-    <string name="configuration">Configuration</string>
-
     <!-- Configuracion (hecho) -->
     <string name="conf_multimedia">Media</string>
     <string name="conf_idioma">Language</string>
@@ -28,17 +24,78 @@
     <string name="tvContrasenya">Contraseña:</string>
     <string name="btnEntrar">Acceder</string>
 
-    <!-- Menu Inferior (modificar) -->
+    <!-- Menu Inferior -->
     <string name="item_home">Home</string>
     <string name="item_favorites">Favorites</string>
     <string name="item_upload">Upload</string>
     <string name="item_mailbox">Mailbox</string>
     <string name="item_me">Me</string>
 
-    <!-- Fragment Me (acabar) -->
-    <string name="products_uploaded">Products Uploaded</string>
+    <!-- Fragment Me -->
+    <string name="favorite_text">You do not have any products in your favorites.</string>
 
-    <!-- FAQ (hecho) -->
+    <!-- Fragment Me -->
+    <string name="products_uploaded">Products Uploaded</string>
+    <string name="get_premium">Get Premium</string>
+    <string name="configuration">Configuration</string>
+    <string name="need_help">Need Help?</string>
+    <string name="log_out">Log Out</string>
+
+    <!-- Fragment Premium -->
+    <string name="premium_button_invoice">See Invoice</string>
+    <string name="premium_text">You are now Premium.\nHere is the invoice:</string>
+    <string name="premium_button_get">Buy Premium</string>
+
+    <!-- Fragment Home -->
+    <string name="text_articles_not_found">No articles were found.</string>
+
+    <!-- Fragment Products -->
+    <string name="text_no_articles_uploaded">You have not uploaded any products.</string>
+
+    <!-- Fragment User Settings -->
+    <string name="text_user_profile">User Profile</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_surnames">Surnames</string>
+    <string name="hint_actual_password">Actual Password</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_update_profile">Update Profile</string>
+
+    <!-- Dialogue -->
+    <string name="dialogue_rating">Rate the seller:</string>
+    <string name="dialogue_comment">Write your comment here...</string>
+
+    <!-- Activity Upload -->
+    <string name="text_upload_article">Upload Article</string>
+    <string name="text_article_title">Title</string>
+    <string name="text_article_description">Description</string>
+    <string name="text_article_category">Category</string>
+    <string name="text_article_price">Price</string>
+    <string name="text_upload_image">Upload Image:</string>
+    <string name="text_image_uploaded">Image Uploaded</string>
+    <string name="button_upload_article">Upload</string>
+    <string name="button_cancel_article">Cancel</string>
+
+    <!-- Activity Registration -->
+    <string name="text_registration">Registration</string>
+    <string name="hint_location">Location</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="text_change_to_login">Already have an account? Log in here.</string>
+
+    <!-- Activity Login -->
+    <string name="text_login">Login</string>
+    <string name="button_login">Log In</string>
+    <string name="text_change_to_registration">¿No tienes una cuenta? Registrate aquí.</string>
+
+    <!-- Items -->
+    <string name="button_delete">Delete</string>
+    <string name="button_message">Message</string>
+    <string name="button_buy">Buy</string>
+
+    <!-- FAQ -->
+    <string name="faq_title">FAQ</string>
     <string name="faq_1_question">How can I post an item on the app?</string>
     <string name="faq_1_answer">To post an item, simply click the "+" button in the bottom menu. Then, fill in the details of your product. Once you\'ve entered all the information, press "Upload Item" and your item will be available for other users.</string>
     <string name="faq_2_question">How can I contact the seller of an item?</string>

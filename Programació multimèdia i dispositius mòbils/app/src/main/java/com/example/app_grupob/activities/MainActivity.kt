@@ -58,6 +58,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        aplicarIdiomaGuardado()
+    }
+
     private fun cambioFragment() {
         when (posicion) {
             0 -> supportFragmentManager.beginTransaction()

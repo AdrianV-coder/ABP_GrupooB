@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
+#include <QMessageBox>
 
 DAnyadirUsuarios::DAnyadirUsuarios(QWidget *parent) : QDialog(parent) {
     setupUi(this);
@@ -41,7 +42,6 @@ void DAnyadirUsuarios::slotAnyadirUsuario() {
     QString apellidos = leApellidos_Anyadir->text();
     QString correo = leCorreo_Anyadir->text();
     QString contrasena = leContrasena_Anyadir -> text();
-    //QString telefono = leTelefono_Anyadir->text();
     QString localidad = leLocalidad_Anyadir->text();
 
     // Crear un objeto JSON con los datos
@@ -58,7 +58,7 @@ void DAnyadirUsuarios::slotAnyadirUsuario() {
 	/*   MÉTODO POST   */
 
     // Configurar la solicitud POST
-    QNetworkRequest request(QUrl("http://api.grupob.com/App_Api/usuarios"));
+    QNetworkRequest request(QUrl("http://4.211.191.132:8080/App_Api/usuarios"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     
     // Enviar la solicitud POST
@@ -77,13 +77,17 @@ void DAnyadirUsuarios::slotSalir() {
 void DAnyadirUsuarios::onRespuestaRecibida(QNetworkReply* reply) {
     if (reply->error() == QNetworkReply::NoError) {
         qDebug() << "Usuario añadido con éxito:" << reply->readAll();
+        emit usuarioActualizado();
     } else {
         qDebug() << "Error al añadir usuario:" << reply->errorString();
         qDebug() << "Código de error:" << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         qDebug() << "Respuesta completa del servidor:" << reply->readAll();
+        
+        QMessageBox::warning(this, "Error al añadir el usuario", "ERROR, el usuario no se ha podido insertar en la base de datos", QMessageBox::Ok | QMessageBox::Cancel);
     }
     
     reply->deleteLater(); // Marca el objeto para su eliminación
+    emit actualizarTablaUsaurios();
 }
 
 

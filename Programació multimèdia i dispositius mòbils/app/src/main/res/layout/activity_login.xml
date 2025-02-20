@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/light_grey"
-    tools:context=".activities.RegistrationActivity">
+    tools:context=".activities.LoginActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -30,78 +30,62 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_user_profile"
+                android:text="@string/text_login"
                 android:textSize="36sp"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 android:textColor="@color/green"/>
 
             <EditText
-                android:id="@+id/etModifyName"
+                android:id="@+id/etLoginEmail"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_text"
-                android:drawableLeft="@drawable/ic_me"
+                android:drawableLeft="@drawable/ic_mailbox"
                 android:drawablePadding="8dp"
-                android:hint="@string/hint_name"
+                android:hint="@string/hint_email"
                 android:textColor="@color/dark_grey"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="34dp"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:layout_marginTop="34dp"/>
 
             <EditText
-                android:id="@+id/etModifySurnames"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/custom_text"
-                android:drawableLeft="@drawable/ic_surnames"
-                android:drawablePadding="8dp"
-                android:hint="@string/hint_surnames"
-                android:textColor="@color/dark_grey"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="18dp"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/etModifyActualPassword"
+                android:id="@+id/etLoginPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_text"
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="8dp"
-                android:hint="@string/hint_actual_password"
+                android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:textColor="@color/dark_grey"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="18dp"
-                android:padding="8dp"/>
-
-            <EditText
-                android:id="@+id/etModifyNewPassword"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/custom_text"
-                android:drawableLeft="@drawable/ic_lock"
-                android:drawablePadding="8dp"
-                android:hint="@string/hint_new_password"
-                android:inputType="textPassword"
-                android:textColor="@color/dark_grey"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="18dp"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:layout_marginTop="18dp"/>
 
             <Button
-                android:id="@+id/btnModify"
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="@string/hint_update_profile"
-                android:textSize="18sp"
-                android:layout_marginTop="26dp"
+                android:text="@string/button_login"
                 android:backgroundTint="@color/green"
-                app:cornerRadius="20dp"/>
+                android:textSize="18sp"
+                android:layout_marginTop="30dp"
+                app:cornerRadius="26dp"/>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/txtChangeToRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_change_to_registration"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:padding="8dp"
+        android:layout_marginBottom="20dp"/>
 
 </LinearLayout>

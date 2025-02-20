@@ -1,24 +1,16 @@
 package com.example.app_grupob.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.RecyclerView
 import com.example.app_grupob.R
 import com.example.app_grupob.activities.ConfigurationActivity
-import com.example.app_grupob.activities.MainActivity
-import com.example.app_grupob.activities.WelcomeActivity
-import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
+import com.example.app_grupob.activities.LoginActivity
 import com.example.app_grupob.databinding.FragmentMeBinding
 import com.example.app_grupob.pojos.Usuario
-import com.example.app_grupob.pojos.UsuarioEntity
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
@@ -36,8 +28,8 @@ class MeFragment: Fragment() {
         binding = FragmentMeBinding.inflate(inflater, container, false)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
-            val valoraciones = RetrofitInstance.api.getValoraciones(usuario.get(0).id.toString())
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
+            val valoraciones = RetrofitInstance.api.getValoraciones(usuario.id.toString())
             val totalValoraciones = valoraciones.size
             var valorTotalValoraciones:Float = 0f
             val mediaValoraciones:Float
@@ -53,7 +45,7 @@ class MeFragment: Fragment() {
             }
 
             withContext(Dispatchers.Main) {
-                binding.txtNombreUsuario.text = "${usuario.get(0).nombre} ${usuario.get(0).apellidos.substring(0, 1)}."
+                binding.txtNombreUsuario.text = "${usuario.nombre} ${usuario.apellidos.substring(0, 1)}."
                 binding.txtValoracionUsuario.text = mediaValoraciones.toString().substring(0, 3)
                 binding.txtTotalValoraciones.text = "(${totalValoraciones.toString()})"
 
@@ -116,7 +108,7 @@ class MeFragment: Fragment() {
                 }
             }
 
-            val intent = Intent(context, WelcomeActivity::class.java)
+            val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -127,7 +119,7 @@ class MeFragment: Fragment() {
 
     fun esPremium() {
         CoroutineScope(Dispatchers.IO).launch {
-            val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
             withContext(Dispatchers.Main) {
                 val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
                 if (usuarioNuevo.premium) {

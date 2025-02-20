@@ -4,8 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -37,6 +39,7 @@ class UploadArticuloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         binding = ActivityUploadArticuloBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,15 +53,15 @@ class UploadArticuloActivity : AppCompatActivity() {
 
             withContext(Dispatchers.Main) {
                 val adapter = ArrayAdapter(this@UploadArticuloActivity, android.R.layout.simple_spinner_item, listaNombreCategorias)
-                binding.spinnerCategorias.adapter = adapter
+                binding.spinnerCategories.adapter = adapter
             }
         }
 
-        binding.btnSubirImagen.setOnClickListener {
+        binding.btnUploadImage.setOnClickListener {
             seleccionarImagen()
         }
 
-        binding.btnEnviar.setOnClickListener {
+        binding.btnUploadArticulo.setOnClickListener {
             comprobarFormulario { articuloId ->
                 if (articuloId > 0) {
                     Toast.makeText(this, "Artículo registrado correctamente", Toast.LENGTH_SHORT).show()
@@ -74,7 +77,7 @@ class UploadArticuloActivity : AppCompatActivity() {
         }
 
         // Botón para cancelar
-        binding.btnCancelar.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -85,7 +88,6 @@ class UploadArticuloActivity : AppCompatActivity() {
         }
     }
 
-    // Método para abrir la galería
     private fun seleccionarImagen() {
         ImagePicker.with(this)
             .galleryOnly()
@@ -93,12 +95,14 @@ class UploadArticuloActivity : AppCompatActivity() {
             .createIntent { intent -> imagePickerLauncher.launch(intent) }
     }
 
-    // Resultado de la selección de imagen
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val data: Intent? = result.data
-            selectedImageUri = data?.data // Guardamos la URI de la imagen
+            selectedImageUri = data?.data
             Toast.makeText(this, "Imagen seleccionada", Toast.LENGTH_SHORT).show()
+
+            binding.txtImage.visibility = View.GONE
+            binding.txtImageUploaded.visibility = View.VISIBLE
         }
     }
 
@@ -121,10 +125,7 @@ class UploadArticuloActivity : AppCompatActivity() {
             RetrofitInstance.api.subirImagen(articuloId, body)
                 .enqueue(object : Callback<Map<String, String>> {
                     override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
-                        if (response.isSuccessful) {
-                            val imageUrl = response.body()?.get("imageUrl")
-                            Toast.makeText(this@UploadArticuloActivity, "Imagen subida: $imageUrl", Toast.LENGTH_LONG).show()
-                        } else {
+                        if (!response.isSuccessful) {
                             Toast.makeText(this@UploadArticuloActivity, "Error al subir la imagen", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -139,14 +140,14 @@ class UploadArticuloActivity : AppCompatActivity() {
     }
 
     fun comprobarFormulario(callback: (Int) -> Unit) {
-        if (binding.etTitulo.text.isNotBlank() && binding.etDescripcion.text.isNotBlank() && binding.etPrecio.text.isNotBlank()) {
-            val titulo = binding.etTitulo.text.toString()
-            val descripcion = binding.etDescripcion.text.toString()
+        if (binding.etArticuloTitle.text.isNotBlank() && binding.etArticuloDescription.text.isNotBlank() && binding.etArticuloPrice.text.isNotBlank()) {
+            val titulo = binding.etArticuloTitle.text.toString()
+            val descripcion = binding.etArticuloDescription.text.toString()
             val calendar = Calendar.getInstance()
             val sdf = SimpleDateFormat("dd/MM/yyyy")
             val fechaCreacion = sdf.format(calendar.time)
-            val precio = binding.etPrecio.text.toString().toDouble()
-            val nombreCategoria = binding.spinnerCategorias.selectedItem.toString()
+            val precio = binding.etArticuloPrice.text.toString().toDouble()
+            val nombreCategoria = binding.spinnerCategories.selectedItem.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
                 try {
@@ -158,24 +159,22 @@ class UploadArticuloActivity : AppCompatActivity() {
                             break
                         }
                     }
-                    val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+                    val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
                     val usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
 
-                    if (categoria == null) {
-                        Log.e("UploadArticulo", "Categoría no encontrada")
-                    } else {
+                    if (categoria != null) {
                         val articulo = ArticuloRequest(titulo, descripcion, fechaCreacion, precio, usuario, categoria)
 
                         RetrofitInstance.api.insertarArticulo(articulo)
 
                         buscarArticulo { articuloId ->
-                            callback(articuloId) // Retorna el ID del artículo
+                            callback(articuloId)
                         }
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@UploadArticuloActivity, "Error al guardar el artículo", Toast.LENGTH_SHORT).show()
-                        callback(-1) // Indicar error
+                        callback(-1)
                     }
                 }
             }
@@ -192,7 +191,7 @@ class UploadArticuloActivity : AppCompatActivity() {
             try {
                 val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()
                 val articulos = RetrofitInstance.api.getArticulos()
-                val articulosComprables = articulos.filter { it.usuario.id == usuarioRoom[0].id }
+                val articulosComprables = articulos.filter { it.usuario.id == usuarioRoom[UsuarioApplication.database.usuarioDao().getUsuario().size-1].id }
 
                 if (articulosComprables.isNotEmpty()) {
                     id = articulosComprables.last().id

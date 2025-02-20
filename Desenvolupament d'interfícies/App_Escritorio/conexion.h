@@ -4,7 +4,6 @@
 #include "usuario.h"
 
 #include <QNetworkAccessManager>
-//#include <QWebSocket>
 
 /* conexión a una api externa */
 class Conexion : public QObject {
@@ -13,23 +12,20 @@ class Conexion : public QObject {
     	Conexion();
     	QVector<Usuario *> usuarios;
     
-		//QNetworkAccessManager *manager;
 		QString text;
-		//QByteArray dato;
 		QByteArray getDatos();
+		void peticionGet();
+		//void peticionPost(QJsonObject json, QString id);
 
 	private:
-    	//QWebSocket *webSocket;
     	QNetworkAccessManager* manager;
     	QByteArray dato;
     	
 	public slots:
-		/*void slotRespuestaFinalizada(QNetworkReply *);
-		void onMensajeRecibido(const QString &mensaje);*/
 		void onRespuestaRecibida(QNetworkReply*);
 	
 	signals:
-    	void datosActualizados();
+ 	  	void datosActualizados();   	
 };
 
 #endif

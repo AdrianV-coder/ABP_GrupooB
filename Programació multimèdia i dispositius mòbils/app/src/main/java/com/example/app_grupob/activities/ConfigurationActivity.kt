@@ -3,19 +3,19 @@ package com.example.app_grupob.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.app_grupob.R
 import com.example.app_grupob.databinding.ActivityConfigurationBinding
-import com.example.app_grupob.fragments.HelpFragment
-import com.example.app_grupob.fragments.MeFragment
 
 class ConfigurationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfigurationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         binding = ActivityConfigurationBinding.inflate(layoutInflater)
         setContentView(binding.root)
