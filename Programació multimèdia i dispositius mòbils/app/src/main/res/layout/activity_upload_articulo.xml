@@ -1,109 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.UploadArticuloActivity"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:background="@color/light_grey"
+    tools:context=".activities.UploadArticuloActivity">
 
-    <!-- Titulo del Artículo -->
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Título del Artículo"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <EditText
-        android:id="@+id/etTitulo"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ingresa el título"
-        android:inputType="text"
-        android:layout_marginBottom="16dp"/>
+        android:layout_margin="30dp"
+        android:background="@drawable/custom_text"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
 
-    <!-- Descripción del Artículo -->
-    <TextView
-        android:id="@+id/tvDescripcion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descripción del Artículo"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <EditText
-        android:id="@+id/etDescripcion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ingresa la descripción"
-        android:inputType="textMultiLine"
-        android:minLines="3"
-        android:maxLines="5"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Categoria del Artículo -->
-    <TextView
-        android:id="@+id/tvCategoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Categoria del Artículo"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <Spinner
-        android:id="@+id/spinnerCategorias"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Precio del Artículo -->
-    <TextView
-        android:id="@+id/tvPrecio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Precio del Artículo"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <EditText
-        android:id="@+id/etPrecio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ingresa el precio"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp"/>
-
-    <Button
-        android:id="@+id/btnSubirImagen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Subir Imagen"
-        android:layout_marginBottom="16dp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
-
-        <!-- Botón para enviar el formulario -->
-        <Button
-            android:id="@+id/btnEnviar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Subir Artículo"/>
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:padding="24dp">
 
-        <Button
-            android:id="@+id/btnCancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Cancelar"/>
+            <TextView
+                android:id="@+id/uploadArticuloText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subir Artículo"
+                android:textSize="36sp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/green"/>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/etArticuloTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_text"
+                android:hint="Title"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="34dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:padding="8dp"/>
+
+            <EditText
+                android:id="@+id/etArticuloDescription"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_text"
+                android:hint="Description"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="18dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:padding="8dp"/>
+
+            <!-- cambiar color de los items del spinner -->
+            <Spinner
+                android:id="@+id/spinnerCategories"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_text"
+                android:hint="Category"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="18dp"
+                android:padding="8dp"/>
+
+            <EditText
+                android:id="@+id/etArticuloPrice"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_text"
+                android:hint="Price"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/cardview_dark_background"
+                android:layout_marginTop="18dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:padding="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="18dp">
+
+                <TextView
+                    android:id="@+id/txtImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Upload Image:"
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:textColor="@color/green"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/txtImageUploaded"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Image Uploaded"
+                    android:layout_marginStart="15dp"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:visibility="gone"
+                    android:textColor="@color/green"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUploadImage"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/green"
+                    android:layout_gravity="end"
+                    app:icon="@drawable/ic_upload_image"
+                    app:iconSize="32dp"
+                    app:iconGravity="textTop"
+                    app:cornerRadius="10dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnUploadArticulo"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Upload"
+                android:textSize="18sp"
+                android:layout_marginTop="26dp"
+                android:backgroundTint="@color/green"
+                app:cornerRadius="20dp"/>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Cancel"
+                android:textSize="18sp"
+                android:backgroundTint="@color/green"
+                app:cornerRadius="20dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

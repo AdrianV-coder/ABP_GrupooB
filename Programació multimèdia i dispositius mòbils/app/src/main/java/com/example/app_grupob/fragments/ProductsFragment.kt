@@ -68,10 +68,10 @@ class ProductsFragment : Fragment(), OnDeleteArticuloListener {
         CoroutineScope(Dispatchers.IO).launch {
             var articulos = RetrofitInstance.api.getArticulos()
             var articulosComprables: MutableList<Articulo> = mutableListOf()
-            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
 
             for (articulo: Articulo in articulos) {
-                if (articulo.usuario.id.equals(usuario.get(0).id)) {
+                if (articulo.usuario.id.equals(usuario.id)) {
                     articulosComprables.add(articulo)
                 }
             }

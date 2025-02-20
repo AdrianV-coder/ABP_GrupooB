@@ -3,6 +3,7 @@ package com.adverolt.app_api.controller;
 import com.adverolt.app_api.model.Articulo;
 import com.adverolt.app_api.model.Categoria;
 import com.adverolt.app_api.model.dto.usuario.UsuarioResponseDto;
+import com.adverolt.app_api.repository.IArticuloRepository;
 import com.adverolt.app_api.repository.ICategoriaRespositorio;
 import com.adverolt.app_api.repository.IFotoRepository;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,6 +26,9 @@ public class CategoriaController {
 
     @Autowired
     private ICategoriaRespositorio repo;
+
+    @Autowired
+    private IArticuloRepository articuloRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -42,16 +47,21 @@ public class CategoriaController {
     }
 
     @GetMapping("/{idCategoria}")
-    public ResponseEntity<Categoria> listarPorId(@PathVariable Integer idCategoria) {
-
+    public ResponseEntity<List<Articulo>> listarPorId(@PathVariable Integer idCategoria) {
+        List<Articulo> articulos = new ArrayList<>();
         Optional<Categoria> op = repo.findById(idCategoria);
 
-        if (op.isPresent()){
-            return new ResponseEntity<>(op.get(), HttpStatus.OK);
+        if (op.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        for (Articulo a : articuloRepository.findAll()){
+            if (a.getCategoria().getId().equals(idCategoria)){
+                articulos.add(a);
+            }
         }
         // Código 200 OK para select
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+        return new ResponseEntity<>(articulos, HttpStatus.OK);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.adverolt.app_api.model.dto.usuario;
 
+import jakarta.persistence.Column;
+
 public class UsuarioResponseDto {
     private Integer id;
     private String nombre;
@@ -7,19 +9,30 @@ public class UsuarioResponseDto {
     private String correo;
     private double longitud;
     private double latitud;
+    private Boolean premium;
 
     // CONSTRUCTORES
     public UsuarioResponseDto() {
     }
 
-    public UsuarioResponseDto(Integer id, String nombre, String apellidos, String correo, double longitud, double latitud) {
+    public UsuarioResponseDto(Integer id, String nombre, String apellidos, String correo, double longitud, double latitud, Boolean premium) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
         this.longitud = longitud;
         this.latitud = latitud;
+        this.premium = premium;
     }
+
+    public Boolean getPremium() {
+        return premium;
+    }
+
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
+    }
+
 
     // GETTERS Y SETTERS
 

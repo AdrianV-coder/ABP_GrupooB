@@ -9,7 +9,7 @@ import java.util.List;
 public interface IUsuarioService {
     List<UsuarioResponseDto> listar();
     UsuarioResponseDto listarPorId(Integer id);
-    Usuario registrar(UsuarioRequestDto usuarioDto);
+    Usuario registrar(UsuarioRequestDto usuarioDto) throws Exception;
     Usuario modificar(Integer id, UsuarioRequestDto usuarioDto);
     void eliminar(Integer id) throws Exception;
 
@@ -17,4 +17,5 @@ public interface IUsuarioService {
     Boolean comprobarUsuarioCorrecto(String email, String contrasenya) throws Exception;
     Boolean comprobarUsuarioExiste(String email) throws Exception;
     UsuarioResponseDto devolverUsuarioConCorreo(String email) throws Exception;
+    Usuario modificarPremium(Integer id);
 }

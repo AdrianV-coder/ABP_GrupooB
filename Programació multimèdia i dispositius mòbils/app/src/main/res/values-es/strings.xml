@@ -39,18 +39,17 @@
     <string name="products_uploaded">Productos Subidos</string>
 
     <!-- FAQ (hecho) -->
-    <string name="faq_question_1">¿Cómo puedo vender un artículo en la aplicación?</string>
-    <string name="faq_answer_1">Para vender un artículo, solo necesitas crear una cuenta en la aplicación y luego acceder a la sección \'Vender\'. Desde ahí, podrás agregar fotos, una descripción detallada, el precio y la categoría de tu artículo. Después, solo tienes que publicar el anuncio y esperar a que los compradores se pongan en contacto contigo.</string>
- <!--
-    <string name="faq_question_2">¿Cómo puedo asegurarme de que el artículo que quiero comprar está en buen estado?</string>
-    <string name="faq_answer_2">En la descripción del artículo, el vendedor debe incluir detalles sobre el estado del producto, y puedes solicitar más fotos o información adicional antes de hacer la compra. Además, te recomendamos leer las opiniones de otros compradores sobre el vendedor para tener más confianza en tu compra.</string>
-    <string name="faq_question_3">¿Qué métodos de pago son aceptados?</string>
-    <string name="faq_answer_3">Aceptamos varios métodos de pago seguros, como tarjetas de crédito y débito, transferencias bancarias y plataformas de pago en línea (como PayPal o MercadoPago). Asegúrate de confirmar el método de pago con el vendedor antes de realizar la transacción.</string>
-    <string name="faq_question_4">¿Puedo devolver un artículo si no estoy satisfecho con él?</string>
-    <string name="faq_answer_4">La política de devoluciones depende del vendedor. Es importante revisar las condiciones del producto antes de comprarlo y asegurarse de que está de acuerdo con las políticas del vendedor. Si no estás satisfecho con tu compra, comunícate directamente con el vendedor para discutir la posibilidad de una devolución o cambio.</string>
-    <string name="faq_question_5">¿Qué debo hacer si tengo problemas con un comprador o vendedor?</string>
-    <string name="faq_answer_5">Si experimentas algún problema con un comprador o vendedor, puedes ponerte en contacto con nuestro equipo de soporte a través de la aplicación. También puedes calificar y dejar comentarios sobre la transacción para ayudar a otros usuarios a tomar decisiones informadas.</string>
- -->
+    <string name="faq_1_question">¿Cómo puedo publicar un artículo en la aplicación?</string>
+    <string name="faq_1_answer">Para publicar un anuncio, simplemente haz clic en el botón "+" en el menú inferior. Luego, completa los detalles de tu producto. Una vez que hayas ingresado toda la información, presiona "Subir Artículo" y tu artículo estará disponible para otros usuarios.</string>
+    <string name="faq_2_question">¿Cómo puedo contactar con el vendedor de un artículo?</string>
+    <string name="faq_2_answer">Si encuentras un artículo que te interesa, haz clic en el anuncio para ver más detalles. Allí encontrarás un botón de "Chat", que te permitirá enviar un mensaje directo al vendedor. Asegúrate de ser claro y respetuoso en tu mensaje para obtener una respuesta rápida.</string>
+    <string name="faq_3_question">¿Puedo eliminar un anuncio que ya no quiero mostrar?</string>
+    <string name="faq_3_answer">Sí, puedes eliminar tu anuncio en cualquier momento. Ve a tu perfil, haz clic en el apartado de "Productos Subidos", y debajo de los anuncios, encontrarás una opción para "Eliminar". Esto retirará el anuncio de la plataforma de inmediato.</string>
+    <string name="faq_4_question">¿Puedo negociar el precio de un artículo con el vendedor?</string>
+    <string name="faq_4_answer">Sí, puedes negociar el precio a través del sistema de mensajería en la aplicación. Si el vendedor está dispuesto a bajar el precio, podrán acordar un nuevo valor. Recuerda ser amable y respetuoso al negociar.</string>
+    <string name="faq_5_question">¿Cómo puedo asegurarme de que un anuncio es legítimo?</string>
+    <string name="faq_5_answer">Siempre verifica los detalles del artículo y las fotos antes de hacer una compra. Si tienes dudas, no dudes en contactar al vendedor para obtener más información. Además, revisa las valoraciones para tener una mejor idea de la reputación del vendedor.</string>
+
     <!-- Configuracion (hecho) -->
     <string-array name="idioma">
         <item name="espanyol">Español</item>

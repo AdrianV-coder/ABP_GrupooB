@@ -8,6 +8,7 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.app_grupob.R
 import com.example.app_grupob.databinding.ActivityConfigurationBinding
+import com.example.app_grupob.fragments.HelpFragment
 import com.example.app_grupob.fragments.MeFragment
 
 class ConfigurationActivity : AppCompatActivity() {
