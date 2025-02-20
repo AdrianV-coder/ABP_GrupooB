@@ -196,7 +196,7 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
 
     private fun ponerArticuloFavorito() {
         CoroutineScope(Dispatchers.IO).launch {
-            val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
             val usuarioActual = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
             if (favorito) {
                 // Eliminar de favoritos

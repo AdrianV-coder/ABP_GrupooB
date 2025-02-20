@@ -3,14 +3,14 @@ package com.example.app_grupob.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_grupob.R
-import com.example.app_grupob.databinding.ActivityWelcomeBinding
+import com.example.app_grupob.databinding.ActivityLoginBinding
+import com.example.app_grupob.databinding.ActivityRegistrationBinding
 import com.example.app_grupob.pojos.Usuario
 import com.example.app_grupob.pojos.UsuarioEntity
 import com.example.app_grupob.retrofit.RetrofitInstance
@@ -22,10 +22,8 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import java.net.URL
 
-class WelcomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityWelcomeBinding
-    private var loginExpanded = false
-    private var registerExpanded = false
+class RegistrationActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRegistrationBinding
     private val context = this
     private var latitud:Double = 0.0
     private var longitud:Double = 0.0
@@ -34,88 +32,22 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = ActivityWelcomeBinding.inflate(layoutInflater)
+        binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            if (UsuarioApplication.database.usuarioDao().getUsuario().isNotEmpty()) {
-                val intent = Intent(context, MainActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        binding.llLogin.setOnClickListener {
-            loginExpanded = !loginExpanded
-            modificarLogin(loginExpanded)
-        }
-
-        binding.llRegister.setOnClickListener {
-            registerExpanded = !registerExpanded
-            modificarRegistro(registerExpanded)
-        }
-
-        binding.btnLogin.setOnClickListener {
-            comprobarLogin()
-        }
 
         binding.btnRegister.setOnClickListener {
             comprobarRegistro()
+        }
+
+        binding.txtChangeToLogin.setOnClickListener {
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-    }
-
-    fun modificarLogin(extended: Boolean) {
-        if (extended) {
-            binding.expandableLoginView.visibility = View.VISIBLE
-            binding.expandableRegisterView.visibility = View.GONE
-            registerExpanded = false
-        } else {
-            binding.expandableLoginView.visibility = View.GONE
-        }
-    }
-
-    fun modificarRegistro(extended: Boolean) {
-        if (extended) {
-            binding.expandableRegisterView.visibility = View.VISIBLE
-            binding.expandableLoginView.visibility = View.GONE
-            loginExpanded = false
-        } else {
-            binding.expandableRegisterView.visibility = View.GONE
-        }
-    }
-
-    fun comprobarLogin() {
-        if (binding.etLoginEmail.text.isNotEmpty() && binding.etLoginPassword.text.isNotEmpty()) {
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val correo = binding.etLoginEmail.text.toString()
-                    val contrasena = binding.etLoginPassword.text.toString()
-                    val existe = RetrofitInstance.api.getUsuarioCorrecto(correo, contrasena)
-
-                    if (existe) {
-                        val usuario:Usuario = RetrofitInstance.api.getUsuarioCorreo(correo)
-
-                        val usuarioEntity = UsuarioEntity(usuario.id, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud, usuario.premium)
-                        UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
-
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(context, "Correo o contraseña incorrectos.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } catch (e: Exception) {
-                    Log.e("ERROR", "Error al acceder a la API: ${e.message}")
-                }
-            }
-        } else {
-            Toast.makeText(this, "No puedes dejar campos vacios.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -145,7 +77,7 @@ class WelcomeActivity : AppCompatActivity() {
 
                             RetrofitInstance.api.insertarUsuario(usuarioCreado)
 
-                            val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioCreado.correo)
+                            val usuarioNuevo: Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioCreado.correo)
 
                             val usuarioEntity = UsuarioEntity(usuarioNuevo.id, usuarioNuevo.nombre, usuarioNuevo.apellidos, usuarioNuevo.correo, usuarioCreado.contrasena, usuarioNuevo.longitud, usuarioNuevo.latitud, usuarioNuevo.premium)
                             UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)

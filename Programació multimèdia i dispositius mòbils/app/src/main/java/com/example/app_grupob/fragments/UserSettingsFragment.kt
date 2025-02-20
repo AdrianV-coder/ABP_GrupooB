@@ -34,15 +34,12 @@ class UserSettingsFragment : Fragment() {
         binding = FragmentUserSettingsBinding.inflate(inflater, container, false)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
 
             withContext(Dispatchers.Main) {
                 binding.etNombre.setText(usuario.nombre)
                 binding.etApellidos.setText(usuario.apellidos)
                 binding.etContrasena.setText(usuario.contrasena)
-
-                Log.e("AAAA", "Latitud: ${usuario.latitud.toString()}")
-                Log.e("AAAA", "Longitud: ${usuario.longitud.toString()}")
             }
         }
 
@@ -60,7 +57,7 @@ class UserSettingsFragment : Fragment() {
             val contrasena = binding.etContrasena.text.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
-                val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+                val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
                 val usuario = Usuario(usuarioActual.id.toString().toInt(), nombre, apellidos, usuarioActual.correo, contrasena, usuarioActual.longitud, usuarioActual.latitud, usuarioActual.premium)
 
                 RetrofitInstance.api.modificarUsuario(usuario.id.toString(), usuario)
