@@ -19,12 +19,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import java.net.URL
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
     private var loginExpanded = false
     private var registerExpanded = false
     private val context = this
+    private var latitud:Double = 0.0
+    private var longitud:Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +100,7 @@ class WelcomeActivity : AppCompatActivity() {
                     if (existe) {
                         val usuario:Usuario = RetrofitInstance.api.getUsuarioCorreo(correo)
 
-                        val usuarioEntity = UsuarioEntity(usuario.id, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud)
+                        val usuarioEntity = UsuarioEntity(usuario.id, usuario.nombre, usuario.apellidos, usuario.correo, "", usuario.longitud, usuario.latitud, usuario.premium)
                         UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
 
                         val intent = Intent(context, MainActivity::class.java)
@@ -116,24 +120,34 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     fun comprobarRegistro() {
-        if (binding.etRegisterEmail.text.isNotEmpty() && binding.etRegisterPassword.text.isNotEmpty() && binding.etRegisterConfirmPassword.text.isNotEmpty()) {
+        if (binding.etRegisterEmail.text.isNotEmpty() && binding.etRegisterPassword.text.isNotEmpty() && binding.etRegisterConfirmPassword.text.isNotEmpty() && binding.etRegisterName.text.isNotEmpty() && binding.etRegisterSurnames.text.isNotEmpty()  && binding.etRegistarLocation.text.isNotEmpty()) {
             if (binding.etRegisterPassword.text.toString() == binding.etRegisterConfirmPassword.text.toString()) {
+                val nombre = binding.etRegisterName.text.toString()
+                val apellidos = binding.etRegisterSurnames.text.toString()
+                val localidad = binding.etRegistarLocation.text.toString()
+                val correo = binding.etRegisterEmail.text.toString()
+                val contrasena = binding.etRegisterPassword.text.toString()
+
                 val context = this
                 CoroutineScope(Dispatchers.IO).launch {
+                    val coordenadas = searchCity(localidad)
+
+                    if (coordenadas != null) {
+                        latitud = coordenadas.first
+                        longitud = coordenadas.second
+                    }
+
                     try {
-                        val correo = binding.etRegisterEmail.text.toString()
-                        val contrasena = binding.etRegisterPassword.text.toString()
                         val existe = RetrofitInstance.api.getUsuarioExiste(correo)
 
                         if (!existe) {
-                            // Acabar el formulario de Registro
-                            val usuarioCreado = Usuario(-1,"Joaquin", "Tomas Guerra", correo, contrasena, 0.0, 0.0)
+                            val usuarioCreado = Usuario(-1, nombre, apellidos, correo, contrasena, longitud, latitud, false)
 
                             RetrofitInstance.api.insertarUsuario(usuarioCreado)
 
                             val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioCreado.correo)
 
-                            val usuarioEntity = UsuarioEntity(usuarioNuevo.id, usuarioNuevo.nombre, usuarioNuevo.apellidos, usuarioNuevo.correo, usuarioCreado.contrasena, usuarioNuevo.longitud, usuarioNuevo.latitud)
+                            val usuarioEntity = UsuarioEntity(usuarioNuevo.id, usuarioNuevo.nombre, usuarioNuevo.apellidos, usuarioNuevo.correo, usuarioCreado.contrasena, usuarioNuevo.longitud, usuarioNuevo.latitud, usuarioNuevo.premium)
                             UsuarioApplication.database.usuarioDao().addUsuario(usuarioEntity)
 
                             val intent = Intent(context, MainActivity::class.java)
@@ -152,6 +166,26 @@ class WelcomeActivity : AppCompatActivity() {
             }
         } else {
             Toast.makeText(this, "No puedes dejar campos vacios.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private suspend fun searchCity(city: String): Pair<Double, Double>? {
+        return try {
+            val url = "https://nominatim.openstreetmap.org/search?q=$city&format=json&countrycodes=ES"
+            val response = URL(url).readText()
+            val jsonArray = JSONArray(response)
+
+            if (jsonArray.length() > 0) {
+                val location = jsonArray.getJSONObject(0)
+                val lat = location.getDouble("lat")
+                val lon = location.getDouble("lon")
+                Pair(lat, lon)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 }

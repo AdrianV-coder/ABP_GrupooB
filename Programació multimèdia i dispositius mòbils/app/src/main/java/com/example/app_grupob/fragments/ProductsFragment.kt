@@ -32,27 +32,14 @@ class ProductsFragment : Fragment(), OnDeleteArticuloListener {
     ): View? {
         binding = FragmentProductsBinding.inflate(inflater, container, false)
 
-        val recyclerViewArticulos = binding.rvArticulosPropios
-        recyclerViewArticulos.layoutManager = GridLayoutManager(context, 2)
-
-        val listener:OnDeleteArticuloListener = this
-        CoroutineScope(Dispatchers.IO).launch {
-            var articulos = RetrofitInstance.api.getArticulos()
-            var articulosComprables: MutableList<Articulo> = mutableListOf()
-            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
-
-            for (articulo: Articulo in articulos) {
-                if (articulo.usuario.id.equals(usuario.get(0).id)) {
-                    articulosComprables.add(articulo)
-                }
-            }
-
-            withContext(Dispatchers.Main) {
-                recyclerViewArticulos.adapter = OwnArticulosAdapter(articulosComprables, listener)
-            }
-        }
+        cargarArticulos()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarArticulos()
     }
 
     override fun eliminarArticulo(articulo: Articulo) {
@@ -71,6 +58,36 @@ class ProductsFragment : Fragment(), OnDeleteArticuloListener {
         }
 
         dialog?.show()
+    }
+
+    fun cargarArticulos() {
+        val recyclerViewArticulos = binding.rvArticulosPropios
+        recyclerViewArticulos.layoutManager = GridLayoutManager(context, 2)
+
+        val listener:OnDeleteArticuloListener = this
+        CoroutineScope(Dispatchers.IO).launch {
+            var articulos = RetrofitInstance.api.getArticulos()
+            var articulosComprables: MutableList<Articulo> = mutableListOf()
+            val usuario = UsuarioApplication.database.usuarioDao().getUsuario()
+
+            for (articulo: Articulo in articulos) {
+                if (articulo.usuario.id.equals(usuario.get(0).id)) {
+                    articulosComprables.add(articulo)
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                if (articulosComprables.size == 0) {
+                    binding.txtProductosNoSubidos.visibility = View.VISIBLE
+                    binding.rvArticulosPropios.visibility = View.GONE
+                } else {
+                    binding.txtProductosNoSubidos.visibility = View.GONE
+                    binding.rvArticulosPropios.visibility = View.VISIBLE
+                }
+
+                recyclerViewArticulos.adapter = OwnArticulosAdapter(articulosComprables, listener)
+            }
+        }
     }
 
     fun eliminarArticuloDeLaBaseDeDatos(articulo: Articulo) {

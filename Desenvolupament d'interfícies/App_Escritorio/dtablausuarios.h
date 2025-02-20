@@ -4,6 +4,10 @@
 
 #include "ui_dtablausuarios.h"
 #include "usuario.h"
+#include "deliminarusuarios.h"
+#include "danyadirusuarios.h"
+#include "delegirusuarios.h"
+#include "conexion.h"
 
 #include <QVector>
 #include <QDialog>
@@ -11,20 +15,37 @@
 #include <QAbstractTableModel>
 #include <QModelIndex>
 
+class ModeloTabla;
 
 class DTablaUsuarios : public QDialog, public Ui::DTablaUsuarios {
 	Q_OBJECT
 
 	public:
 		DTablaUsuarios(QVector<Usuario *> *pUsuarioPasados, QWidget *parent = nullptr);
+		QVector<Usuario *> *pUsuario;
+		ModeloTabla *modelo;
+		
+		DEliminarUsuarios *dEliminarUsuarios;
+		DElegirUsuarios *dElegirUsuarios;
+		DAnyadirUsuarios *dAnyadirUsuarios;
+		Conexion *conexionAPI;
+		
+	public slots:
+		void slotEliminarUsuario();
+		void slotElegirUsuario();
+		void slotAnyadirUsuario();
+		void slotInicio();
+		void procesarDatos(QByteArray);
 };
 
 class ModeloTabla : public QAbstractTableModel {
 	Q_OBJECT
 	
 	public:
-		QVector<Usuario *> *pUsuario;
 		ModeloTabla(QVector<Usuario *> *pUsuarioPasados, QObject *parent = nullptr);
+		QVector<Usuario *> *pUsuario;
+		
+		void actualizar();
 		
 		int	columnCount(const QModelIndex &parent = QModelIndex()) const override;
 		int	rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -34,7 +55,6 @@ class ModeloTabla : public QAbstractTableModel {
 		QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 		
 	public slots:
-		void slotTemporizador();
 };
 
 #endif 

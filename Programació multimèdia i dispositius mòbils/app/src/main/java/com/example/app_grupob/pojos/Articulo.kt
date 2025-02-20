@@ -6,7 +6,8 @@ data class Articulo(
     val descripcion:String,
     val precio:Double,
     val fechaCreacion:String,
-    val usuario:Usuario
+    val usuario:Usuario,
+    val categoria: Categoria
 )
 
 data class ArticuloRequest(
@@ -14,6 +15,6 @@ data class ArticuloRequest(
     val descripcion:String,
     val fechaCreacion:String,
     val precio:Double,
-    val usuario:Usuario
-    //val foto:Foto
+    val usuario:Usuario,
+    val categoria: Categoria
 )

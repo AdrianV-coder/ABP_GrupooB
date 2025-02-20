@@ -38,18 +38,18 @@
     <!-- Fragment Me (acabar) -->
     <string name="products_uploaded">Products Uploaded</string>
 
-    <!-- FAQ (hecho)
-    <string name="faq_question_1">How can I sell an item in the app?</string>
-    <string name="faq_answer_1">To sell an item, simply create an account in the app, then go to the \'Sell\' section. From there, you can upload photos, write a detailed description, set a price, and select a category for your item. After that, just publish the listing and wait for buyers to contact you.</string>
-    <string name="faq_question_2">How can I ensure that the item I want to buy is in good condition?</string>
-    <string name="faq_answer_2">In the item description, the seller should include details about the product\'s condition, and you can request more photos or additional information before making the purchase. Additionally, we recommend reading reviews from other buyers about the seller to have more confidence in your purchase.</string>
-    <string name="faq_question_3">What payment methods are accepted?</string>
-    <string name="faq_answer_3">We accept various secure payment methods, such as credit and debit cards, bank transfers, and online payment platforms (like PayPal or MercadoPago). Make sure to confirm the payment method with the seller before proceeding with the transaction.</string>
-    <string name="faq_question_4">Can I return an item if I\'m not satisfied with it?</string>
-    <string name="faq_answer_4">Return policies depend on the seller. It\'s important to check the product conditions before purchasing and ensure you agree with the seller\'s policies. If you're not satisfied with your purchase, contact the seller directly to discuss the possibility of a return or exchange.</string>
-    <string name="faq_question_5">What should I do if I have issues with a buyer or seller?</string>
-    <string name="faq_answer_5">If you experience any issues with a buyer or seller, you can contact our support team through the app. You can also rate and leave feedback on the transaction to help other users make informed decisions.</string>
--->
+    <!-- FAQ (hecho) -->
+    <string name="faq_1_question">How can I post an item on the app?</string>
+    <string name="faq_1_answer">To post an item, simply click the "+" button in the bottom menu. Then, fill in the details of your product. Once you\'ve entered all the information, press "Upload Item" and your item will be available for other users.</string>
+    <string name="faq_2_question">How can I contact the seller of an item?</string>
+    <string name="faq_2_answer">If you find an item you\'re interested in, click the listing to view more details. There, you\'ll find a "Chat" button that allows you to send a direct message to the seller. Be sure to be clear and respectful in your message to get a quick response.</string>
+    <string name="faq_3_question">Can I delete a listing I no longer want to show?</string>
+    <string name="faq_3_answer">Yes, you can delete your listing at any time. Go to your profile, click on the "Uploaded Products" section, and below your listings, you’ll find an option to "Delete". This will immediately remove the listing from the platform.</string>
+    <string name="faq_4_question">Can I negotiate the price of an item with the seller?</string>
+    <string name="faq_4_answer">Yes, you can negotiate the price through the messaging system within the app. If the seller is willing to lower the price, you can agree on a new value. Remember to be polite and respectful during negotiations.</string>
+    <string name="faq_5_question">How can I make sure a listing is legitimate?</string>
+    <string name="faq_5_answer">Always check the item details and photos before making a purchase. If you have doubts, feel free to contact the seller for more information. Additionally, review the ratings to get a better idea of the seller’s reputation.</string>
+
     <!-- Configuracion (hecho) -->
     <string-array name="idioma">
         <item name="espanyol">Spanish</item>
@@ -61,6 +61,4 @@
         <item name="espanyol">es</item>
         <item name="ingles">en</item>
     </string-array>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -31,11 +31,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.addFab.setOnClickListener{
+            posicion = 2
+            cambioFragment()
+        }
+
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.item_home -> posicion = 0
                 R.id.item_favorites -> posicion = 1
-                R.id.item_upload -> posicion = 2
                 R.id.item_mailbox -> posicion = 3
                 R.id.item_me -> posicion = 4
             }
@@ -68,10 +72,13 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, UploadArticuloActivity::class.java)
                 startActivity(intent)
             }
-            3 -> supportFragmentManager.beginTransaction()
+            3 -> Toast.makeText(this, "No disponible.", Toast.LENGTH_SHORT).show()
+                /*
+                supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, MailboxFragment())
                 .addToBackStack(null)
                 .commit()
+                */
             4 -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, MeFragment())
                 .addToBackStack(null)

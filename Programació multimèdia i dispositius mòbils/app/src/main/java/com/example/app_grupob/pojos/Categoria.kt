@@ -1,6 +1,6 @@
 package com.example.app_grupob.pojos
 
-data class Foto(
+data class Categoria(
     val id:Int,
-    val url:String
+    val nombre:String
 )

@@ -17,6 +17,8 @@ import com.example.app_grupob.activities.MainActivity
 import com.example.app_grupob.activities.WelcomeActivity
 import com.example.app_grupob.databinding.FragmentDisplayArticuloBinding
 import com.example.app_grupob.databinding.FragmentMeBinding
+import com.example.app_grupob.pojos.Usuario
+import com.example.app_grupob.pojos.UsuarioEntity
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
@@ -51,7 +53,7 @@ class MeFragment: Fragment() {
             }
 
             withContext(Dispatchers.Main) {
-                binding.txtNombreUsuario.text = "${usuario.get(0).nombre} ${usuario.get(0).apellidos.substring(0, 1).toUpperCase()}."
+                binding.txtNombreUsuario.text = "${usuario.get(0).nombre} ${usuario.get(0).apellidos.substring(0, 1)}."
                 binding.txtValoracionUsuario.text = mediaValoraciones.toString().substring(0, 3)
                 binding.txtTotalValoraciones.text = "(${totalValoraciones.toString()})"
 
@@ -118,6 +120,22 @@ class MeFragment: Fragment() {
             startActivity(intent)
         }
 
+        esPremium()
+
         return binding.root
+    }
+
+    fun esPremium() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[0]
+            withContext(Dispatchers.Main) {
+                val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
+                if (usuarioNuevo.premium) {
+                    binding.imgOdoo.visibility = View.VISIBLE
+                } else {
+                    binding.imgOdoo.visibility = View.GONE
+                }
+            }
+        }
     }
 }
