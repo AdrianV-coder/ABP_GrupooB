@@ -9,7 +9,7 @@
         android:id="@+id/txtProductosNoSubidos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="No tienes subido ningún producto."
+        android:text="@string/text_no_articles_uploaded"
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/dark_grey"

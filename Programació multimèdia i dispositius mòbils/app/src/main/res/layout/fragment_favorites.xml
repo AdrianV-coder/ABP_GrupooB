@@ -9,7 +9,7 @@
         android:id="@+id/txtNoFavoritos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="No tienes ningún producto en favorito."
+        android:text="@string/favorite_text"
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/dark_grey"
