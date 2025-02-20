@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -38,6 +39,7 @@ class UploadArticuloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         binding = ActivityUploadArticuloBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -57,8 +59,6 @@ class UploadArticuloActivity : AppCompatActivity() {
 
         binding.btnUploadImage.setOnClickListener {
             seleccionarImagen()
-            binding.txtImage.visibility = View.GONE
-            binding.txtImageUploaded.visibility = View.VISIBLE
         }
 
         binding.btnUploadArticulo.setOnClickListener {
@@ -88,7 +88,6 @@ class UploadArticuloActivity : AppCompatActivity() {
         }
     }
 
-    // Método para abrir la galería
     private fun seleccionarImagen() {
         ImagePicker.with(this)
             .galleryOnly()
@@ -96,12 +95,14 @@ class UploadArticuloActivity : AppCompatActivity() {
             .createIntent { intent -> imagePickerLauncher.launch(intent) }
     }
 
-    // Resultado de la selección de imagen
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val data: Intent? = result.data
-            selectedImageUri = data?.data // Guardamos la URI de la imagen
+            selectedImageUri = data?.data
             Toast.makeText(this, "Imagen seleccionada", Toast.LENGTH_SHORT).show()
+
+            binding.txtImage.visibility = View.GONE
+            binding.txtImageUploaded.visibility = View.VISIBLE
         }
     }
 
@@ -124,10 +125,7 @@ class UploadArticuloActivity : AppCompatActivity() {
             RetrofitInstance.api.subirImagen(articuloId, body)
                 .enqueue(object : Callback<Map<String, String>> {
                     override fun onResponse(call: Call<Map<String, String>>, response: Response<Map<String, String>>) {
-                        if (response.isSuccessful) {
-                            val imageUrl = response.body()?.get("imageUrl")
-                            Toast.makeText(this@UploadArticuloActivity, "Imagen subida: $imageUrl", Toast.LENGTH_LONG).show()
-                        } else {
+                        if (!response.isSuccessful) {
                             Toast.makeText(this@UploadArticuloActivity, "Error al subir la imagen", Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -164,21 +162,19 @@ class UploadArticuloActivity : AppCompatActivity() {
                     val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
                     val usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
 
-                    if (categoria == null) {
-                        Log.e("UploadArticulo", "Categoría no encontrada")
-                    } else {
+                    if (categoria != null) {
                         val articulo = ArticuloRequest(titulo, descripcion, fechaCreacion, precio, usuario, categoria)
 
                         RetrofitInstance.api.insertarArticulo(articulo)
 
                         buscarArticulo { articuloId ->
-                            callback(articuloId) // Retorna el ID del artículo
+                            callback(articuloId)
                         }
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(this@UploadArticuloActivity, "Error al guardar el artículo", Toast.LENGTH_SHORT).show()
-                        callback(-1) // Indicar error
+                        callback(-1)
                     }
                 }
             }

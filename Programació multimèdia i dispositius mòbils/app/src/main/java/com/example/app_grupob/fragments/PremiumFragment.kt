@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.Toast
 import com.example.app_grupob.R
 import com.example.app_grupob.activities.MainActivity
@@ -37,6 +38,15 @@ class PremiumFragment : Fragment() {
             modificarPremium()
         }
 
+        binding.btnFactura.setOnClickListener {
+            val webView = view?.findViewById<WebView>(R.id.webViewFactura)
+            webView?.loadUrl("https://www.marca.com")
+
+            binding.btnConseguirPremium.visibility = View.GONE
+            binding.llPremium.visibility = View.GONE
+            binding.webViewFactura.visibility = View.VISIBLE
+        }
+
         return binding.root
     }
 
@@ -46,10 +56,10 @@ class PremiumFragment : Fragment() {
             withContext(Dispatchers.Main) {
                 val usuarioNuevo:Usuario = RetrofitInstance.api.getUsuarioCorreo(usuarioActual.correo)
                 if (usuarioNuevo.premium) {
-                    binding.txtPremium.visibility = View.VISIBLE
+                    binding.llPremium.visibility = View.VISIBLE
                     binding.btnConseguirPremium.visibility = View.GONE
                 } else {
-                    binding.txtPremium.visibility = View.GONE
+                    binding.llPremium.visibility = View.GONE
                     binding.btnConseguirPremium.visibility = View.VISIBLE
                 }
             }

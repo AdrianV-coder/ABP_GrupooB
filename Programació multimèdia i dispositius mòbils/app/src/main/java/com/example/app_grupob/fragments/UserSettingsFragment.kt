@@ -37,13 +37,12 @@ class UserSettingsFragment : Fragment() {
             val usuario = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
 
             withContext(Dispatchers.Main) {
-                binding.etNombre.setText(usuario.nombre)
-                binding.etApellidos.setText(usuario.apellidos)
-                binding.etContrasena.setText(usuario.contrasena)
+                binding.etModifyName.setText(usuario.nombre)
+                binding.etModifySurnames.setText(usuario.apellidos)
             }
         }
 
-        binding.btnActualizarPerfil.setOnClickListener {
+        binding.btnModify.setOnClickListener {
             comprobarFormulario()
         }
 
@@ -51,23 +50,29 @@ class UserSettingsFragment : Fragment() {
     }
 
     fun comprobarFormulario() {
-        if (binding.etNombre.text.toString().isNotBlank() && binding.etApellidos.text.toString().isNotBlank() && binding.etContrasena.text.toString().isNotBlank()) {
-            val nombre = binding.etNombre.text.toString()
-            val apellidos = binding.etApellidos.text.toString()
-            val contrasena = binding.etContrasena.text.toString()
+        if (binding.etModifyName.text.toString().isNotBlank() && binding.etModifySurnames.text.toString().isNotBlank() && binding.etModifyActualPassword.text.toString().isNotBlank() && binding.etModifyNewPassword.text.toString().isNotBlank()) {
+            val nombre = binding.etModifyName.text.toString()
+            val apellidos = binding.etModifySurnames.text.toString()
+            val contrasenaActual = binding.etModifyActualPassword.text.toString()
+            val contrasenaNueva = binding.etModifyNewPassword.text.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
                 val usuarioActual = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
-                val usuario = Usuario(usuarioActual.id.toString().toInt(), nombre, apellidos, usuarioActual.correo, contrasena, usuarioActual.longitud, usuarioActual.latitud, usuarioActual.premium)
+                if (RetrofitInstance.api.getUsuarioCorrecto(usuarioActual.correo, contrasenaActual)) {
+                    val usuario = Usuario(usuarioActual.id.toString().toInt(), nombre, apellidos, usuarioActual.correo, contrasenaNueva, usuarioActual.longitud, usuarioActual.latitud, usuarioActual.premium)
 
-                RetrofitInstance.api.modificarUsuario(usuario.id.toString(), usuario)
-                modificarRoom(usuario)
+                    RetrofitInstance.api.modificarUsuario(usuario.id.toString(), usuario)
+                    modificarRoom(usuario)
+
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Perfil actualizado.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "La contraseña actual no es correcta.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-
-            Toast.makeText(context, "Perfil actualizado.", Toast.LENGTH_SHORT).show()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, UserSettingsFragment())
-                .commit()
         } else {
             Toast.makeText(context, "Debes de rellenar todos los campos.", Toast.LENGTH_SHORT).show()
         }

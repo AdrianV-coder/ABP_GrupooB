@@ -27,24 +27,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            /* CODIGO PARA BORRAR LOS USUARIOS DE ROOM EN CASO DE ERROR
-            val usuarios = UsuarioApplication.database.usuarioDao().getUsuario()
-            for (user in usuarios) {
-                UsuarioApplication.database.usuarioDao().deleteUsuario(user)
-            }
-             */
-
-            if (UsuarioApplication.database.usuarioDao().getUsuario().isNotEmpty()) {
-                if (RetrofitInstance.api.getUsuarioExiste(UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1].correo)) {
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Log.e("ERROR_APP", "El usuario de Room ha sido eliminado en la base de datos.")
-                }
-            }
-        }
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -61,6 +43,25 @@ class LoginActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            if (UsuarioApplication.database.usuarioDao().getUsuario().isNotEmpty()) {
+                if (RetrofitInstance.api.getUsuarioExiste(UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1].correo)) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Log.e("ERROR_APP", "El usuario de Room ha sido eliminado en la base de datos.")
+                    val usuarios = UsuarioApplication.database.usuarioDao().getUsuario()
+                    for (user in usuarios) {
+                        UsuarioApplication.database.usuarioDao().deleteUsuario(user)
+                    }
+                }
+            }
         }
     }
 
