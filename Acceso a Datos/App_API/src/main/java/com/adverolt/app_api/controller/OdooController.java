@@ -48,4 +48,22 @@ public class OdooController {
                     .body("Error al actualizar partner: " + e.getMessage());
         }
     }
+
+    @GetMapping("/generate-pdf/{userId}")
+    public ResponseEntity<String> generateInvoicePdf(@PathVariable("userId") Integer userId) {
+        // Verificar si se ha recibido un ID de usuario
+        if (userId == null) {
+            return ResponseEntity.badRequest().body("El userId es requerido");
+        }
+
+        // Llamar al servicio Odoo para obtener el PDF de la factura asociada al usuario
+        String pdfUrl = odooService.getInvoicePdfForUser(userId);
+
+        if (pdfUrl == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo generar el PDF");
+        }
+
+        // Devolver la URL del PDF o el PDF en base64
+        return ResponseEntity.ok(pdfUrl);
+    }
 }
