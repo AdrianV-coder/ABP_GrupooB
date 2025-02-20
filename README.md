@@ -1,6 +1,4 @@
-# SimarroPop - Projecte Integrador 2024/2025
-
-**Versió 1:** 03/02/2025
+# ListFor - Projecte Integrador 2024/2025
 
 ---
 
