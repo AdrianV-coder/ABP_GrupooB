@@ -6,6 +6,7 @@ import com.example.app_grupob.pojos.Categoria
 import com.example.app_grupob.pojos.Usuario
 import com.example.app_grupob.pojos.Valoracion
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -125,5 +126,5 @@ interface ApiService {
     suspend fun insertarUsuarioOdoo(
         @Query("name") name: String,
         @Query("email") email: String
-    ): Response<Unit>
+    ): Response<ResponseBody>
 }

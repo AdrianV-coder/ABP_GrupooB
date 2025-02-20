@@ -169,18 +169,7 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
         val valoracion = Valoracion(descripcion, estrellas, usuarioQueValora, usuarioValorado)
 
         CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = RetrofitInstance.api.insertarValoracion(valoracion)
-                if (response.isSuccessful) {
-                    // Éxito, puedes notificar al usuario que la valoración fue enviada.
-                } else {
-                    // Maneja el error, tal vez mostrando un mensaje de error al usuario.
-                    Log.e("Valoración Error", "Error al enviar la valoración: ${response.code()}")
-                }
-            } catch (e: Exception) {
-                // Manejo de errores si ocurre una excepción en la llamada API
-                Log.e("Valoración Error", "Error al enviar la valoración: ${e.message}")
-            }
+            RetrofitInstance.api.insertarValoracion(valoracion)
         }
     }
 
@@ -199,18 +188,14 @@ class DisplayArticuloFragment(articuloPulsado: Articulo) : Fragment() {
             val usuarioRoom = UsuarioApplication.database.usuarioDao().getUsuario()[UsuarioApplication.database.usuarioDao().getUsuario().size-1]
             val usuarioActual = RetrofitInstance.api.getUsuarioCorreo(usuarioRoom.correo)
             if (favorito) {
-                // Eliminar de favoritos
                 RetrofitInstance.api.eliminarFavorito(usuarioActual.id, articulo.id)
                 withContext(Dispatchers.Main) {
-                    // Actualizar UI
                     binding.btnFavoritos.setIconResource(R.drawable.ic_favorite_empty)
                 }
                 favorito = false
             } else {
-                // Añadir a favoritos
                 RetrofitInstance.api.insertarFavorito(usuarioActual.id, articulo.id)
                 withContext(Dispatchers.Main) {
-                    // Actualizar UI
                     binding.btnFavoritos.setIconResource(R.drawable.ic_favorite_full_red)
                 }
                 favorito = true

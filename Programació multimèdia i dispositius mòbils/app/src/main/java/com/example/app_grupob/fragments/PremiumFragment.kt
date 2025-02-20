@@ -1,8 +1,6 @@
 package com.example.app_grupob.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +8,8 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Toast
 import com.example.app_grupob.R
-import com.example.app_grupob.activities.MainActivity
-import com.example.app_grupob.adapters.ArticulosAdapter
 import com.example.app_grupob.databinding.FragmentPremiumBinding
 import com.example.app_grupob.pojos.Usuario
-import com.example.app_grupob.pojos.UsuarioEntity
 import com.example.app_grupob.retrofit.RetrofitInstance
 import com.example.app_grupob.room.UsuarioApplication
 import kotlinx.coroutines.CoroutineScope
@@ -39,12 +34,13 @@ class PremiumFragment : Fragment() {
         }
 
         binding.btnFactura.setOnClickListener {
-            val webView = view?.findViewById<WebView>(R.id.webViewFactura)
-            webView?.loadUrl("https://www.marca.com")
+            Toast.makeText(context, "Este botón debería de mostrar la factura, pero no funciona.", Toast.LENGTH_SHORT).show()
+            //val webView = view?.findViewById<WebView>(R.id.webViewFactura)
+            //webView?.loadUrl("http://4.211.191.132:8069/report/html/account.report_invoice/92")
 
-            binding.btnConseguirPremium.visibility = View.GONE
-            binding.llPremium.visibility = View.GONE
-            binding.webViewFactura.visibility = View.VISIBLE
+            //binding.btnConseguirPremium.visibility = View.GONE
+            //binding.llPremium.visibility = View.GONE
+            //binding.webViewFactura.visibility = View.VISIBLE
         }
 
         return binding.root
