@@ -18,13 +18,7 @@ DTablaUsuarios::DTablaUsuarios(QVector<Usuario *> *pUsuarioPasados, QWidget *par
 	dElegirUsuarios = nullptr;
 	dAnyadirUsuarios = nullptr;
 	
-	
-	conexionAPI = new Conexion();
-    
-    connect(conexionAPI, &Conexion::datosActualizados, this, [this]() {
-    	QByteArray datos = conexionAPI->getDatos();
-    	procesarDatos(datos);  // Reutiliza tu función procesarDatos
-	});
+	iniciarConexion();
 	
 	modelo = new ModeloTabla(pUsuarioPasados);
 	vista -> setModel(modelo);
@@ -106,6 +100,29 @@ void DTablaUsuarios::procesarDatos(QByteArray datos) {
     qDebug() << "Se han procesado" << pUsuario -> size() << "usuarios desde el JSON.";
 }
 
+void DTablaUsuarios::iniciarConexion() {
+	for(int i = 0; pUsuario -> size(); i++) {
+		delete pUsuario -> at(i);
+	}
+	pUsuario -> clear();
+	
+	conexionAPI = new Conexion();
+    
+    connect(conexionAPI, &Conexion::datosActualizados, this, [this]() {
+    	QByteArray datos = conexionAPI->getDatos();
+    	procesarDatos(datos);  // Reutiliza tu función procesarDatos
+	});
+}
+
+void DTablaUsuarios::slotActualizarTabla() {
+    if (conexionAPI) {
+    	conexionAPI -> peticionGet();
+    	
+        modelo -> actualizar();
+        qDebug() << "Tabla de usuarios actualizada en tiempo real.";
+    }
+}
+
 void DTablaUsuarios::slotInicio() {
 	// Cierra la ventana actual
     this->close();
@@ -114,6 +131,7 @@ void DTablaUsuarios::slotInicio() {
 void DTablaUsuarios::slotEliminarUsuario() {
 	if (dEliminarUsuarios == nullptr) {
 		dEliminarUsuarios = new DEliminarUsuarios();
+		connect(dEliminarUsuarios, SIGNAL(actualizarTablaUsaurios()), this, SLOT(slotActualizarTabla()));
 	}
 	
 	dEliminarUsuarios -> show();
@@ -130,6 +148,7 @@ void DTablaUsuarios::slotElegirUsuario() {
 void DTablaUsuarios::slotAnyadirUsuario() {
 	if (dAnyadirUsuarios == nullptr) {
 		dAnyadirUsuarios = new DAnyadirUsuarios();
+		connect(dAnyadirUsuarios, SIGNAL(actualizarTablaUsaurios()), this, SLOT(slotActualizarTabla()));
 	}
 	
 	dAnyadirUsuarios -> show();
@@ -168,7 +187,7 @@ QVariant ModeloTabla::data(const QModelIndex &index, int role) const {
 	int columna = index.column();
 	
 	Usuario *usuario = pUsuario -> at(fila);
-
+	
 	if (role != Qt::DisplayRole) {
 		return QVariant();
 	}

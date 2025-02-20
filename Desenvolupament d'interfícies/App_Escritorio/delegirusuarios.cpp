@@ -1,6 +1,5 @@
 #include "delegirusuarios.h"
 #include "ui_delegirusuarios.h"
-#include "dmodificarusuarios.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -9,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDebug>
+#include <QMessageBox>
 
 DElegirUsuarios::DElegirUsuarios(QWidget *parent): QDialog(parent){
 	setupUi(this);
@@ -22,19 +22,6 @@ DElegirUsuarios::DElegirUsuarios(QWidget *parent): QDialog(parent){
 void DElegirUsuarios::slotSalir() {
     this->close();
 }
-/*
-void DElegirUsuarios::slotModificarUsuario() {
-	int id = leId_Elegir -> text().toInt();
-	
-
-	if (dModificarUsuarios == nullptr) {
-		dModificarUsuarios = new DModificarUsuarios(id);
-		
-		//connect(this, SIGNAL(pressed()), dControlBolas, SLOT (slotModificar()));
-	}
-	
-	dModificarUsuarios -> show();
-}*/
 
 void DElegirUsuarios::slotElegirUsuario() {
     QString idUsuario = leId_Elegir -> text();  // Obtiene el ID ingresado
@@ -45,7 +32,7 @@ void DElegirUsuarios::slotElegirUsuario() {
 
     // Crear y configurar la solicitud GET a la API
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    QUrl url("http://api.grupob.com/App_Api/usuarios/" + idUsuario);  // Cambia la URL a la real
+    QUrl url("http://4.211.191.132:8080/App_Api/usuarios/" + idUsuario);  // Cambia la URL a la real
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -72,13 +59,18 @@ void DElegirUsuarios::slotElegirUsuario() {
 
             // Abrir la ventana de modificación con los datos obtenidos
             DModificarUsuarios *modificarUsuarios = new DModificarUsuarios(this);
+			
             modificarUsuarios->cargarDatosUsuario(idUsuario, nombre, apellidos, correo, contrasena, latitud, longitud);
             modificarUsuarios->exec();
         } else {
             qDebug() << "Error al obtener usuario:" << reply->errorString();
+            
+            QMessageBox::warning(this, "Error al obtener el usuario", "El ID del usuario introducido no está en la base de datos", QMessageBox::Ok | QMessageBox::Cancel);
+            
         }
         
         reply->deleteLater();
         this->close();
     });
 }
+

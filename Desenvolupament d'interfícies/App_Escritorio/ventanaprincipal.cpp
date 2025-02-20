@@ -30,9 +30,8 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent): QMainWindow(parent) {
 /**********************************************/
 
 void VentanaPrincipal::crearActions() {
-	//accionListarUsuarios -> setShortcut(QKeySequence::Close);
 	accionListarUsuarios = new QAction("Listar Usuarios", this);
-	connect(accionListarUsuarios, SIGNAL(/*actualizarTabla()*/triggered()), this, SLOT(slotTablaUsuarios()));
+	connect(accionListarUsuarios, SIGNAL(triggered()), this, SLOT(slotTablaUsuarios()));
 }
 
   /**********************************************/

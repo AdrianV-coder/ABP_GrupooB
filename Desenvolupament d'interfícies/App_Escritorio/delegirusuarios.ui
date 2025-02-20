@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Introduce el correo del usuario que quieras modificar:</string>
+    <string>Introduce el ID del usuario que quieras modificar:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btnAceptar">

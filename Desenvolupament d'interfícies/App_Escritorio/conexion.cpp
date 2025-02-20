@@ -8,6 +8,7 @@
 #include <QSslSocket>
 #include <QSslConfiguration>
 #include <QDebug>
+#include <QJsonObject>
 
 Conexion::Conexion () {
 	qDebug() << "SSL Support:" << QSslSocket::supportsSsl();
@@ -15,9 +16,12 @@ Conexion::Conexion () {
 	
 	manager = new QNetworkAccessManager(this);
 	connect(manager, SIGNAL(finished(QNetworkReply * )), this,SLOT(onRespuestaRecibida(QNetworkReply *)));
-    
+	
+    /*
     // Realiza la solicitud GET al servidor
-    QNetworkRequest request(QUrl("http://api.grupob.com/App_Api/usuarios"));
+    QNetworkRequest request(QUrl("http://4.211.191.132:8080/App_Api/usuarios"));
+    */
+    
     // Mostramos los errores... ¡ ojo ! lambda functions
 	connect(manager, &QNetworkAccessManager::sslErrors,
         [](QNetworkReply *reply, const QList<QSslError> &errors) {
@@ -34,8 +38,40 @@ Conexion::Conexion () {
             reply->ignoreSslErrors();
         });
     
-    manager->get(request);
+    //manager->get(request);
+    peticionGet();
 }
+
+void Conexion::peticionGet() {
+	// Realiza la solicitud GET al servidor
+    QNetworkRequest request(QUrl("http://4.211.191.132:8080/App_Api/usuarios"));
+    
+	manager->get(request);
+}
+
+/*
+void Conexion::peticionPost(QJsonObject json, QString id) {
+	QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+     QString stringUrl = QString("http://4.211.191.132:8080/App_Api/usuarios/");
+    
+    QNetworkRequest request(QUrl(stringUrl + id));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkReply *reply = manager->put(request, QJsonDocument(json).toJson());
+
+    connect(reply, &QNetworkReply::finished, [reply, this]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            qDebug() << "Usuario actualizado correctamente.";
+        } else {
+            qDebug() << "Error al actualizar usuario:" << reply->errorString();
+        }
+        
+        reply->deleteLater();
+        
+		peticionGet();
+    });
+}*/
+
 
 void Conexion::onRespuestaRecibida(QNetworkReply* reply) {
 	qDebug() << "He entrado en onRespuestaRecibida";
