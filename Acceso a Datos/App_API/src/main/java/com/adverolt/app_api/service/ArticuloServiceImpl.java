@@ -1,8 +1,10 @@
 package com.adverolt.app_api.service;
 
 import com.adverolt.app_api.model.Articulo;
+import com.adverolt.app_api.model.Categoria;
 import com.adverolt.app_api.model.Usuario;
 import com.adverolt.app_api.repository.IArticuloRepository;
+import com.adverolt.app_api.repository.ICategoriaRespositorio;
 import com.adverolt.app_api.repository.IUsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ArticuloServiceImpl implements IArticuloService {
 
     @Autowired
     private IUsuarioRepository repoUsu;
+
+    @Autowired
+    private ICategoriaRespositorio repoCat;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -44,7 +49,11 @@ public class ArticuloServiceImpl implements IArticuloService {
         Usuario usuario = repoUsu.findById(articulodto.getUsuario().getId())
                 .orElseThrow(() -> new Exception("El usuario con ID " + articulodto.getUsuario().getId() + " no existe."));
 
+        Categoria categoria = repoCat.findById(articulodto.getCategoria().getId())
+                .orElseThrow(() -> new Exception("La categoria con ID " + articulodto.getCategoria().getId() + " no existe."));
+
         Articulo articulo = modelMapper.map(articulodto, Articulo.class);
+        articulo.setCategoria(categoria);
         articulo.setUsuario(usuario);
 
         return repository.save(articulo);

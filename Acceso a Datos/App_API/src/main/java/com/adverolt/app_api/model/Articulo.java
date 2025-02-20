@@ -35,7 +35,6 @@ public class Articulo {
     private Foto foto;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
 
@@ -105,5 +104,14 @@ public class Articulo {
         this.usuario = usuario;
     }
     public Double getPrecio() {return precio;}
-    public void setPrecio(Double precio) {this.precio = precio;}}
+    public void setPrecio(Double precio) {this.precio = precio;}
+
+    public List<Usuario> getUsuariosQueFav() {
+        return usuariosQueFav;
+    }
+
+    public void setUsuariosQueFav(List<Usuario> usuariosQueFav) {
+        this.usuariosQueFav = usuariosQueFav;
+    }
+}
 

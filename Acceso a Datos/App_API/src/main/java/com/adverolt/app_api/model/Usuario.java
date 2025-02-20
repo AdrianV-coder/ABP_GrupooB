@@ -30,6 +30,9 @@ public class Usuario {
     @Column(nullable = false)
     private double latitud;
 
+    @Column
+    private Boolean premium;
+
     @ManyToMany
     @JsonIgnore
     @JoinTable(
@@ -49,6 +52,7 @@ public class Usuario {
         this.contrasena = contrasena;
         this.longitud = longitud;
         this.latitud = latitud;
+        this.premium = false;
     }
 
     // GETTERS Y SETTERS
@@ -100,6 +104,14 @@ public class Usuario {
 
     public void setArticulosFavoritos(List<Articulo> articulosFavoritos) {
         this.articulosFavoritos = articulosFavoritos;
+    }
+
+    public Boolean getPremium() {
+        return premium;
+    }
+
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
     }
 }
 

@@ -37,8 +37,12 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
     @Transactional
     @Override
-    public Usuario registrar(UsuarioRequestDto usuariodto) {
+    public Usuario registrar(UsuarioRequestDto usuariodto) throws Exception {
         Usuario usuario = modelMapper.map(usuariodto, Usuario.class);
+        usuario.setPremium(false);
+        if (repository.findByEmail(usuario.getCorreo())!=null){
+            throw new Exception("ya existe un usuario con este correo");
+        }
         return repository.save(usuario);
     }
 
@@ -47,6 +51,19 @@ public class UsuarioServiceImpl implements IUsuarioService{
         Optional<Usuario> op = repository.findById(id);
         if (op.isPresent()) {
             Usuario usuario = modelMapper.map(usuariodto, Usuario.class);
+            usuario.setId(op.get().getId());
+            repository.save(usuario);
+            return usuario;
+        }
+        return null;
+    }
+
+    @Override
+    public Usuario modificarPremium(Integer id) {
+        Optional<Usuario> op = repository.findById(id);
+        if (op.isPresent()) {
+            Usuario usuario = op.get();
+            usuario.setPremium(true);
             usuario.setId(op.get().getId());
             repository.save(usuario);
             return usuario;
@@ -80,4 +97,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
         UsuarioResponseDto usuario = modelMapper.map(repository.findByEmail(email), UsuarioResponseDto.class);
         return usuario;
     }
+
+
 }

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -57,13 +58,18 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> registrar(@RequestBody UsuarioRequestDto usuario) {
+    public ResponseEntity<?> registrar(@RequestBody UsuarioRequestDto usuario) {
 
-        Usuario usuario1 = service.registrar(usuario);
-        if (usuario1 == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Usuario usuario1 = service.registrar(usuario);
+            if (usuario1 == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<>(usuario1, HttpStatus.OK);
+            return new ResponseEntity<>(usuario1, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping("/{id}")
@@ -72,7 +78,12 @@ public class UsuarioController {
         return new ResponseEntity<>(service.modificar(id, usuario), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/premium/{id}")
+    public ResponseEntity<Usuario> modificarPremium(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(service.modificarPremium(id), HttpStatus.OK);
+    }
+
+        @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable("id") Integer id) {
         try {
             service.eliminar(id);
@@ -155,4 +166,35 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/{usuarioId}/favoritos/{articuloId}")
+    public Boolean isFavorito(@PathVariable Integer usuarioId, @PathVariable Integer articuloId) {
+        try {
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new RuntimeException("❌ Usuario con ID " + usuarioId + " no encontrado."));
+            Articulo articulo = articuloRepository.findById(articuloId)
+                    .orElseThrow(() -> new RuntimeException("❌ Artículo con ID " + articuloId + " no encontrado."));
+
+            List<Articulo> articulosFavoritos = usuario.getArticulosFavoritos();
+            for (Articulo art : articulosFavoritos){
+                if (art.getId().equals(articuloId)){
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @GetMapping("/{usuarioId}/favoritos")
+    public List<Articulo> listarArticulosUsuario(@PathVariable Integer usuarioId) {
+        try {
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new RuntimeException("❌ Usuario con ID " + usuarioId + " no encontrado."));
+
+            return usuario.getArticulosFavoritos();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

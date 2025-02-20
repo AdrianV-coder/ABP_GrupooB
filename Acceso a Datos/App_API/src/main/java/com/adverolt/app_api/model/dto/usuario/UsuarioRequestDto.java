@@ -22,16 +22,20 @@ public class UsuarioRequestDto {
     private double longitud;
     private double latitud;
 
+    private boolean premium;
+
     // CONSTRUCTORES
     public UsuarioRequestDto() {
     }
-    public UsuarioRequestDto(String nombre, String apellidos, String correo, String contrasena, double longitud, double latitud) {
+
+    public UsuarioRequestDto(String nombre, String apellidos, String correo, String contrasena, double longitud, double latitud, boolean premium) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
         this.contrasena = contrasena;
         this.longitud = longitud;
         this.latitud = latitud;
+        this.premium = premium;
     }
 
     // GETTERS Y SETTERS
@@ -70,5 +74,13 @@ public class UsuarioRequestDto {
     }
     public void setLatitud(double latitud) {
         this.latitud = latitud;
+    }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
     }
 }
